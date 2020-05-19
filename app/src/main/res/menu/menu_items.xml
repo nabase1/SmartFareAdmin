@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/item_refresh"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="@string/menu_PFF"
+        android:visible="true"
+       />
+
+    <item android:id="@+id/main_menu"
+        android:title="Main Menu"
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        app:showAsAction="always">
+
+        <menu>
+            <item android:id="@+id/item_bookingInfo"
+                android:title="@string/trip_details"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/item_logout"
+                android:title="@string/menu_logOut"
+                app:showAsAction="never"/>
+
+
+            <item android:id="@+id/item_about"
+                android:title="@string/menu_about"
+                app:showAsAction="never"/>
+
+        </menu>
+
+    </item>
+
+</menu>

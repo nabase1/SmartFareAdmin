@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"></include>
+
+    <TextView
+        android:id="@+id/texttitleHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:text="Trip Command"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:fontFamily="@font/el_messiri_bold"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <TextView
+                    android:id="@+id/txtServiceTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Service Type :"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dTextServiceType"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dTextServiceType" />
+
+
+                <TextView
+                    android:id="@+id/dTextServiceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="Nabase"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.285"
+                    app:layout_constraintStart_toEndOf="@+id/txtServiceTypeTitle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/client"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dTextNum"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dTextNum" />
+
+
+
+                <TextView
+                    android:id="@+id/dTextNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="Nabase"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.463"
+                    app:layout_constraintStart_toEndOf="@+id/txtNameTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dTextServiceType" />
+
+                <TextView
+                    android:id="@+id/txtPhonetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/contact"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dContact"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dContact" />
+
+                <TextView
+                    android:id="@+id/dContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="0553181665"
+                    android:textColor="@color/colorBlue"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.474"
+                    app:layout_constraintStart_toEndOf="@+id/txtPhonetitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dTextNum" />
+
+                <TextView
+                    android:id="@+id/txtFromTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/fromtxt"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/ttxtFrom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ttxtFrom"
+                    app:layout_constraintVertical_bias="0.285" />
+
+                <TextView
+                    android:id="@+id/ttxtFrom"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="Tanoso"
+                    android:textSize="15dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.479"
+                    app:layout_constraintStart_toEndOf="@+id/txtFromTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dContact" />
+
+                <TextView
+                    android:id="@+id/txtToTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/to"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/ttxtTo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ttxtTo" />
+
+                <TextView
+                    android:id="@+id/ttxtTo"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="Sofoline"
+                    android:textSize="15dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.671"
+                    app:layout_constraintStart_toEndOf="@+id/txtToTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ttxtFrom" />
+
+                <TextView
+                    android:id="@+id/txtPickupTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/pick_up_date"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/cPickupDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cPickupDate" />
+
+                <EditText
+                    android:id="@+id/cPickupDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="16/12/2019"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:inputType="none"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.365"
+                    app:layout_constraintStart_toEndOf="@+id/txtPickupTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ttxtTo" />
+
+                <TextView
+                    android:id="@+id/txtPickTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/pick_up_time"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/cPickUpTime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cPickUpTime" />
+
+                <EditText
+                    android:id="@+id/cPickUpTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="1:30"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:inputType="none"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.381"
+                    app:layout_constraintStart_toEndOf="@+id/txtPickTime"
+                    app:layout_constraintTop_toBottomOf="@+id/cPickupDate" />
+
+                <TextView
+                    android:id="@+id/txtDistanceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/distancetxt"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/cDistance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cDistance"
+                    app:layout_constraintVertical_bias="0.35" />
+
+                <TextView
+                    android:id="@+id/cDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="23 KM"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.465"
+                    app:layout_constraintStart_toEndOf="@+id/txtDistanceTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/cPickUpTime" />
+
+                <TextView
+                    android:id="@+id/txtAmountTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/el_messiri_bold"
+                    android:text="@string/amount_ghc"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/ctextAmount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ctextAmount" />
+
+                <EditText
+                    android:id="@+id/ctextAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/livingston_sanserif"
+                    android:text="34 GHC"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.376"
+                    app:layout_constraintStart_toEndOf="@+id/txtAmountTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/cDistance"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <Button
+                    android:id="@+id/cbtnDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/roundbtndanger"
+                    android:padding="5dp"
+                    android:text="@string/cancel_request"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerAssign"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <Spinner
+                    android:id="@+id/spinnerAssign"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.044"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAmountTitle"
+                    app:layout_constraintVertical_bias="0.179" />
+
+                <Button
+                    android:id="@+id/buttonStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/roundbtn"
+                    android:padding="5dp"
+                    android:text="@string/confirm"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/cbtnDone"
+                    app:layout_constraintEnd_toStartOf="@+id/cbtnDone"
+                    app:layout_constraintHorizontal_bias="0.089"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cbtnDone"
+                    app:layout_constraintVertical_bias="0.375" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

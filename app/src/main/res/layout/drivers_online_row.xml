@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="12dp"
+    android:layout_margin="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Name :"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="@font/el_messiri_bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dTextNam"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dTextNam" />
+
+        <TextView
+            android:id="@+id/dTextNam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/lux_montag"
+            android:text="Nabase"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.576"
+            app:layout_constraintStart_toEndOf="@+id/txtNameTitle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtVehice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Vehicle:"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="@font/el_messiri_bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dVehicle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dVehicle" />
+
+        <TextView
+            android:id="@+id/dVehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/lux_montag"
+            android:text="0553181665"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toEndOf="@+id/txtVehice"
+            app:layout_constraintTop_toBottomOf="@+id/dTextNam" />
+
+        <TextView
+            android:id="@+id/txtVNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Location:"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="@font/el_messiri_bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ttxtLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ttxtLocation"
+            app:layout_constraintVertical_bias="0.285" />
+
+        <TextView
+            android:id="@+id/ttxtLocation"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="35dp"
+            android:fontFamily="@font/lux_montag"
+            android:text="Tanoso"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toEndOf="@+id/txtVNum"
+            app:layout_constraintTop_toBottomOf="@+id/dVehicle" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
