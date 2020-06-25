@@ -44,14 +44,8 @@ public class CompletedTripDetails extends AppCompatActivity {
     @BindView(R.id.dTextNum)
     TextView textName;
 
-    @BindView(R.id.ttxtFrom)
-    TextView regNum;
-
     @BindView(R.id.dContact)
     TextView driverContact;
-
-    @BindView(R.id.ttxtTo)
-    TextView vehicleExtColor;
 
     @BindView(R.id.uTextName)
     TextView utextName;

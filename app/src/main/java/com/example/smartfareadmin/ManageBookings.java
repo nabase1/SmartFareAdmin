@@ -190,7 +190,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
                 notify = true;
                 status = "-1";
                 UpdatedBooking();
-                backToList();
+                onBackPressed();
                 dialog.dismiss();
                 Toast.makeText(ManageBookings.this, "Booking Cancelled!", Toast.LENGTH_SHORT).show();
 
@@ -226,10 +226,6 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    @Override
-    public void onBackPressed() {
-      backToList();
-    }
 
     public void showDateDialog() {
 
@@ -308,7 +304,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
             databaseReference.child(userBookingId).child(bDeals.getId()).setValue(bDeals);
             if (notify) {
 
-                sendNotification(userBookingId,"SmartCab GH", msg);
+                sendNotification("cancelled",userBookingId,"SmartCab GH","Request Cancelled:" + msg);
 
             }
             notify = false;
@@ -316,12 +312,12 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    public void backToList(){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Pending Request");
-        startActivity(intent);
-        finish();
-    }
+//    public void backToList(){
+//        Intent intent = new Intent(this, ListServices.class);
+//        intent.putExtra("choice","Pending Request");
+//        startActivity(intent);
+//        finish();
+//    }
 
     //method to fetch data from firebase to populate  spinner
     public void populateSpinner(DatabaseReference databaseReference){
@@ -397,16 +393,16 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
         if (notify) {
 
-            sendNotification(userBookingId,"SmartCab GH",  "Your Booking has been confirmed");
-            sendNotificationToFriver(driverId, "SmartCab GH", "You Have A New Trip");
+            sendNotification("confirm",userBookingId,"SmartCab GH",  "Your Booking has been confirmed");
+            sendNotificationToDriver("request",driverId, "SmartCab GH", "You Have A New Request!");
         }
         notify = false;
 
-        backToList();
+       onBackPressed();
 
     }
 
-    private void sendNotification(String userBookingId, String title, String body) {
+    private void sendNotification(String user, String userBookingId, String title, String body) {
 
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = dRef.orderByKey().equalTo(userBookingId);
@@ -415,7 +411,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Token token = ds.getValue(Token.class);
-                    Data data = new Data(mUid, title, body,  userBookingId, R.drawable.ic_stat_smartcap_logo);
+                    Data data = new Data(user, title, body,  userBookingId, R.drawable.ic_stat_smartcap_logo);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiServices.sendNotification(sender)
@@ -441,7 +437,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-    private void sendNotificationToFriver(String userBookingId, String title, String body) {
+    private void sendNotificationToDriver(String user, String userBookingId, String title, String body) {
 
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = dRef.orderByKey().equalTo(userBookingId);
@@ -450,7 +446,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Token token = ds.getValue(Token.class);
-                    Data data = new Data("driver", title, body,  userBookingId, R.drawable.ic_stat_smartcap_logo);
+                    Data data = new Data(user, title, body,  userBookingId, R.drawable.ic_stat_smartcap_logo);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiServices.sendNotification(sender)

@@ -214,6 +214,7 @@
                         android:text="Ghc 10"
                         android:textAlignment="center"
                         android:textSize="15dp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.381"
                         app:layout_constraintStart_toEndOf="@+id/txtPickTime"
@@ -292,78 +293,6 @@
                         app:layout_constraintStart_toEndOf="@+id/txtPhonetitle"
                         app:layout_constraintTop_toBottomOf="@+id/dTextNum"
                         android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/txtVehicleInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Vehicle Info"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/dContact"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/txtFromTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/el_messiri_bold"
-                        android:text="Vehicle Num :"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/ttxtFrom"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/ttxtFrom"
-                        app:layout_constraintVertical_bias="0.285"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/ttxtFrom"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/livingston_sanserif"
-                        android:text="Tanoso"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.479"
-                        app:layout_constraintStart_toEndOf="@+id/txtFromTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/txtVehicleInfo"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/txtToTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/el_messiri_bold"
-                        android:text="Exterior Color :"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/ttxtTo"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/ttxtTo"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/ttxtTo"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/livingston_sanserif"
-                        android:text="Sofoline"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.671"
-                        app:layout_constraintStart_toEndOf="@+id/txtToTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/ttxtFrom"
-                        android:visibility="gone"/>
-
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

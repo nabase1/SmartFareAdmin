@@ -18,6 +18,7 @@ import com.example.smartfareadmin.AdminActivity;
 import com.example.smartfareadmin.BookingRequest;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.activities.Constants;
+import com.example.smartfareadmin.adapters.PendingBookingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -40,6 +41,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         if(fUser != null ){
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
                 sendOAndAboveNotification(remoteMessage, BookingRequest.class);
             }
             else {
