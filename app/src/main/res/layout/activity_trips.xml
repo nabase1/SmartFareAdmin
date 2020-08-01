@@ -9,9 +9,24 @@
     android:background="@drawable/background">
 
 
+
+    <TextView
+        android:id="@+id/btxtArrowBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0sp"
+        android:layout_marginStart="0sp"
+        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:onClick="backPress"/>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="45sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,15 +40,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginStart="45dp">
+                android:layout_marginStart="35dp">
 
                 <TextView
                     android:id="@+id/txt_dashboard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/smart_dashboard"
+                    android:text="@string/trip"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#e7e6ed" />
@@ -54,38 +69,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                            <Button
-                                android:id="@+id/btn_management"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/ic_business_black_24dp"
-                                android:textStyle="bold"
-                                android:textSize="20dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="Management"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -103,22 +86,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/btn_booking_request"
+                            android:id="@+id/btn_completed_trips"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/rbook"
+                            android:background="@drawable/ic_airport_shuttle_black_24dp"
                             android:textStyle="bold"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:onClick="CompletedTrips"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:text="Booking Request"/>
+                            android:text="Completed Trips"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
 
 
                 <androidx.cardview.widget.CardView
@@ -137,27 +120,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/btn_fare_switch"
+                            android:id="@+id/btn_ongoing_drivers_trip"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@drawable/ic_local_taxi_black_24dp"
                             android:textStyle="bold"
                             android:textSize="20sp"
-                            android:onClick="getTrips"/>
+                            android:onClick="DriversOngoingTrip"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:text="@string/trip"/>
+                            android:text="On Meter Trips"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
-
-
-
-
 
 
                 <androidx.cardview.widget.CardView
@@ -176,86 +154,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/btn_driver_online"
+                            android:id="@+id/btn_completed_drivers_trips"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/pdriver"
+                            android:background="@drawable/mtrips"
                             android:textStyle="bold"
                             android:textSize="20sp"
-                            android:onClick="getDrivers"/>
+                            android:onClick="DriversCompletedTrip"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:text="@string/drivers"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/btn_settings"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_baseline_settings_24"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:onClick="getSettings"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="@string/settings"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/btn_trackVehicles"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_directions_car_black_24dp"
-                            android:textStyle="bold"
-                            android:textSize="20dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="Track Vehicles"/>
+                            android:text="@string/done_trips"/>
 
                     </LinearLayout>
 

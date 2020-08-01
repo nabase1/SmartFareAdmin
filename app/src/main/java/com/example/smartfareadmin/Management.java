@@ -2,6 +2,7 @@ package com.example.smartfareadmin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,45 +29,21 @@ public class Management extends AppCompatActivity {
         Intent intent = new Intent(this, ListServices.class);
         intent.putExtra("choice","services");
         startActivity(intent);
-        finish();
-
     }
 
-    @OnClick(R.id.btn_drivers)
-    public void ManageDrivers(){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Pending Drivers");
-        startActivity(intent);
-        finish();
-    }
-
-    @OnClick(R.id.btn_drivers_confirm)
-    public void ConfirmedDrivers(){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Confirmed Drivers");
-        startActivity(intent);
-        finish();
-    }
 
     @OnClick(R.id.btn_manage_vehicles)
     public void getVehicle(){
         Intent intent = new Intent(this, ListServices.class);
         intent.putExtra("choice","Vehicles");
+        finish();
+    }
+
+    public void driverCode(View view){
+        Intent intent = new Intent(this, GenerateCode.class);
         startActivity(intent);
         finish();
     }
 
-    @OnClick(R.id.btn_manage_prices)
-    public void getPrices(){
-        Intent intent = new Intent(this, PriceControl.class);
-        startActivity(intent);
-        finish();
-    }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, AdminActivity.class);
-        finish();
-        startActivity(intent);
-    }
 }

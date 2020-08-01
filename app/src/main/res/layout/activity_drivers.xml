@@ -9,9 +9,22 @@
     android:background="@drawable/background">
 
 
+    <TextView
+        android:id="@+id/mtxtArrowBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0sp"
+        android:layout_marginStart="0sp"
+        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:onClick="backPress"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,15 +38,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginStart="45dp">
+                android:layout_marginStart="32dp">
 
                 <TextView
                     android:id="@+id/txt_dashboard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/smart_dashboard"
+                    android:text="@string/drivers"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#e7e6ed" />
@@ -69,95 +82,56 @@
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                            <Button
-                                android:id="@+id/btn_management"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/ic_business_black_24dp"
-                                android:textStyle="bold"
-                                android:textSize="20dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="Management"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/btn_booking_request"
+                            android:id="@+id/btn_drivers"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/rbook"
-                            android:textStyle="bold"
-                            android:textSize="20sp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="Booking Request"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/btn_fare_switch"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_local_taxi_black_24dp"
+                            android:background="@drawable/pdriver"
                             android:textStyle="bold"
                             android:textSize="20sp"
-                            android:onClick="getTrips"/>
+                            android:onClick="ManageDrivers"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:text="@string/trip"/>
+                            android:text="Pending drivers"/>
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_margin="12dp">
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <Button
+                            android:id="@+id/btn_drivers_confirm"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/cdriver"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:onClick="ConfirmedDrivers"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Confirmed drivers"/>
 
+                    </LinearLayout>
 
-
+                </androidx.cardview.widget.CardView>
 
 
                 <androidx.cardview.widget.CardView
@@ -181,81 +155,13 @@
                             android:layout_height="100dp"
                             android:background="@drawable/pdriver"
                             android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:onClick="getDrivers"/>
+                            android:textSize="20sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
-                            android:text="@string/drivers"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/btn_settings"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_baseline_settings_24"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:onClick="getSettings"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="@string/settings"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <Button
-                            android:id="@+id/btn_trackVehicles"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_directions_car_black_24dp"
-                            android:textStyle="bold"
-                            android:textSize="20dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            android:text="Track Vehicles"/>
+                            android:text="@string/drivers_online"
+                            android:onClick="getOnlineDrivers"/>
 
                     </LinearLayout>
 

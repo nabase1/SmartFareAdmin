@@ -3,6 +3,7 @@ package com.example.smartfareadmin;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartfareadmin.activities.Constants;
@@ -41,7 +42,6 @@ public class AdminActivity extends AppCompatActivity {
     public void Bookbtn(){
         Intent intent = new Intent(this,   BookingRequest.class);
         startActivity(intent);
-        finish();
     }
 
 
@@ -49,46 +49,31 @@ public class AdminActivity extends AppCompatActivity {
     public void managementbtn(){
         Intent intent = new Intent(this,   Management.class);
         startActivity(intent);
-        finish();
     }
 
-
-    @OnClick(R.id.btn_fare_switch)
-    public void SwitchFare(){
-        Intent intent = new Intent(this, FareSwitch.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @OnClick(R.id.btn_driver_code)
-    public void driverCode(){
-        Intent intent = new Intent(this, GenerateCode.class);
-        startActivity(intent);
-        finish();
-    }
 
     @OnClick(R.id.btn_trackVehicles)
     public void getTrackButton(){
         Intent intent = new Intent(this, AdminMaps.class);
         startActivity(intent);
-        finish();
     }
 
-    @OnClick(R.id.btn_driver_online)
-    public void getOnlineDrivers(){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Drivers Online");
+
+    public void getTrips(View view){
+        Intent intent = new Intent(this,   Trips.class);
         startActivity(intent);
-        finish();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, Login.class);
+    public void getDrivers(View view){
+        Intent intent = new Intent(this,   Drivers.class);
         startActivity(intent);
-        finish();
     }
+
+    public void getSettings(View view){
+        Intent intent = new Intent(this,   Settings.class);
+        startActivity(intent);
+    }
+
 
     private void checkUserStatus(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
