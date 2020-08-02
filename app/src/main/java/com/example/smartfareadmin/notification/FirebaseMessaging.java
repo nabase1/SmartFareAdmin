@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.example.smartfareadmin.AdminActivity;
 import com.example.smartfareadmin.BookingRequest;
 import com.example.smartfareadmin.R;
+import com.example.smartfareadmin.Trips;
 import com.example.smartfareadmin.activities.Constants;
 import com.example.smartfareadmin.adapters.PendingBookingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,10 +43,52 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
-                sendOAndAboveNotification(remoteMessage, BookingRequest.class);
+                if(user != null){
+                    if(user.equals("pending")){
+                        sendOAndAboveNotification(remoteMessage, BookingRequest.class);
+                    }
+                    if(user.equals("completed")){
+                        sendOAndAboveNotification(remoteMessage, Trips.class);
+                    }
+                    if(user.equals("confirm")){
+                        sendOAndAboveNotification(remoteMessage, BookingRequest.class);
+                    }
+                    if(user.equals("startTrip")){
+                        sendOAndAboveNotification(remoteMessage, Trips.class);
+                    }
+                    if(user.equals("completeTrip")){
+                        sendOAndAboveNotification(remoteMessage, Trips.class);
+                    }
+                }
+                else {
+                    sendOAndAboveNotification(remoteMessage, AdminActivity.class);
+                }
+
             }
             else {
-                sendNormalNotification(remoteMessage, BookingRequest.class);
+                if(user != null){
+
+                    if(user.equals("pending")){
+                        sendNormalNotification(remoteMessage, BookingRequest.class);
+                    }
+
+                    if(user.equals("completed")){
+                        sendNormalNotification(remoteMessage, Trips.class);
+                    }
+                    if(user.equals("confirm")){
+                        sendNormalNotification(remoteMessage, BookingRequest.class);
+                    }
+                    if(user.equals("startTrip")){
+                        sendNormalNotification(remoteMessage, Trips.class);
+                    }
+                    if(user.equals("completeTrip")){
+                        sendNormalNotification(remoteMessage, Trips.class);
+                    }
+                }else {
+                    sendNormalNotification(remoteMessage, AdminActivity.class);
+                }
+
+
             }
         }
 

@@ -101,13 +101,6 @@ public class FareSwitch extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, AdminActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 
     public void getPriceStatus() {
         if (per_min_switch.isChecked() || per_km_switch.isChecked()) {

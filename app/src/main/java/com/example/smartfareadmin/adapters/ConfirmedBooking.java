@@ -155,6 +155,7 @@ public class ConfirmedBooking extends RecyclerView.Adapter<ConfirmedBooking.Book
             intent.putExtra("userId", userIdArray.get(position));
             intent.putExtra("bookingId", bookingidArrayList.get(position));
             Log.d("uid",userIdArray.get(position));
+            Log.d("bid",bookingidArrayList.get(position));
             v.getContext().startActivity(intent);
         }
     }

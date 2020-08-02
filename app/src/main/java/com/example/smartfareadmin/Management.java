@@ -36,13 +36,12 @@ public class Management extends AppCompatActivity {
     public void getVehicle(){
         Intent intent = new Intent(this, ListServices.class);
         intent.putExtra("choice","Vehicles");
-        finish();
+        startActivity(intent);
     }
 
     public void driverCode(View view){
         Intent intent = new Intent(this, GenerateCode.class);
         startActivity(intent);
-        finish();
     }
 
 

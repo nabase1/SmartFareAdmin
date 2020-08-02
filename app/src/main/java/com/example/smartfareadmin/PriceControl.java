@@ -59,13 +59,6 @@ public class PriceControl extends AppCompatActivity {
         GetPrices();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, Management.class);
-        finish();
-        startActivity(intent);
-    }
-
     @OnClick(R.id.buttonUpdate)
     public void updateBtn(){
         UpdateFare();

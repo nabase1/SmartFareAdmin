@@ -78,6 +78,7 @@
     <string name="manage_vehicles">Manage Vehicles</string>
     <string name="code_generator">Code Generator</string>
     <string name="manage_services">Manage Services</string>
+    <string name="service_type">Service Type</string>
 
 </resources>
 

@@ -35,6 +35,8 @@ public class ListServices extends AppCompatActivity {
     private boolean stopThread = false;
     @BindView(R.id.textViewHead)
     TextView textViewHead;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mDealLinearManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class ListServices extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         choice = bundle.getString("choice");
+
+        initialize();
 
         loadListView(choice);
        Thread thread=new Thread(){
@@ -90,140 +94,101 @@ public class ListServices extends AppCompatActivity {
     public void loadListView(String option){
 
         if(option.equals("Pending Request")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final PendingBookingAdapter adapter = new PendingBookingAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("services")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("services",this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final DealAdapter adapter = new DealAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Confirmed Request")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final ConfirmedBooking adapter = new ConfirmedBooking();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Cancelled Bookings")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final BookingCancelledAdapter adapter = new BookingCancelledAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Completed Trips")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final CompletedTripAdapter adapter = new CompletedTripAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Pending Drivers")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("drivers profile", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final DriversAdapter adapter = new DriversAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
         }
 
         if(option.equals("Confirmed Drivers")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("drivers profile", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final Confirmed_drivers adapter = new Confirmed_drivers();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
         }
 
         if(option.equals("Vehicles")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("vehicles details", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final VehicleAdapter adapter = new VehicleAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
         }
 
         if(option.equals("Meter Trips")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("Meter Trip", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final MeterCompletedTripAdapter adapter = new MeterCompletedTripAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
         }
 
         if(option.equals("Ongoing Meter Trips")){
-            textViewHead.setText(choice);
             FirebaseUtils.openFirebaseUtils("Meter Trip", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final DriversPersonalOngoingTripAdapter adapter = new DriversPersonalOngoingTripAdapter();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
         }
 
         if(option.equals("Drivers Online")){
-            textViewHead.setText(choice);
+
             FirebaseUtils.openFirebaseUtils("drivers online", this);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
             final DriversOnline adapter = new DriversOnline();
-            recyclerView.setAdapter(adapter);
-            LinearLayoutManager dealLinearManager =
-                    new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
-            recyclerView.setLayoutManager(dealLinearManager);
-
-
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
         }
+    }
+
+    public void initialize(){
+        textViewHead.setText(choice);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
+        mDealLinearManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
     }
 
     @Override
@@ -254,33 +219,6 @@ public class ListServices extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        if(choice.equals("Confirmed Request") || choice.equals("Cancelled Bookings")
-                || choice.equals("Completed Trips") || choice.equals("Pending Request")
-                || choice.equals("Meter Trips") || choice.equals("Ongoing Meter Trips")){
-            Intent intent = new Intent(this,BookingRequest.class);
-            finish();
-            startActivity(intent);
-        }
-        else if(choice.equals("Pending Drivers") || choice.equals("Vehicles") || choice.equals("services") || choice.equals("Confirmed Drivers") ){
-            Intent intent = new Intent(this,Management.class);
-            finish();
-            startActivity(intent);
-        }else if(choice.equals("Drivers Online")){
-            Intent intent = new Intent(this,AdminActivity.class);
-            finish();
-            startActivity(intent);
-        }else {
-            Intent intent = new Intent(this,AdminActivity.class);
-            finish();
-            startActivity(intent);
-        }
-
-
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -288,14 +226,12 @@ public class ListServices extends AppCompatActivity {
            if(choice.equals("services") && item.getItemId() == R.id.action_add){
                Intent intent =  new Intent(this, AddService.class);
                startActivity(intent);
-               finish();
 
        }
 
         if(choice.equals("Vehicles") && item.getItemId() == R.id.action_add){
             Intent intent =  new Intent(this, VehicleRegistration.class);
             startActivity(intent);
-            finish();
 
         }
 

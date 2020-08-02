@@ -75,13 +75,6 @@ public class GenerateCode extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, AdminActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
     @OnClick(R.id.buttonGenerate)
     public void generateUniqueNumber(){
         codeText.setText(getAlphaNumeric(5));

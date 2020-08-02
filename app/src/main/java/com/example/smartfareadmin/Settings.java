@@ -1,6 +1,7 @@
 package com.example.smartfareadmin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +13,22 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
     }
+
+
 
     public void SwitchFare(View view){
         Intent intent = new Intent(this, FareSwitch.class);
         startActivity(intent);
-        finish();
     }
 
     public void getPrices(View view){
         Intent intent = new Intent(this, PriceControl.class);
         startActivity(intent);
-        finish();
+    }
+
+    public void backPressed(View view){
+        onBackPressed();
     }
 }

@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="0sp"
         android:layout_marginStart="0sp"
-        android:background="@drawable/ic_arrow_back_black_24dp"/>
+        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:onClick="backPressed"/>
 
     <ScrollView
         android:layout_width="match_parent"

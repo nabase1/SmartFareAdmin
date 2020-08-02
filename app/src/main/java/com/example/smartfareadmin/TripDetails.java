@@ -56,7 +56,8 @@ public class TripDetails extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth mAuth;
     FirebaseUser user;
-    String cUID,driverId,vehicleId,state,bookingid;
+    String cUID,driverId,state,bookingid;
+    String vehicleId = "";
     String msg;
     AlertDialog alertDialog;
     APIServices apiServices;
@@ -67,9 +68,6 @@ public class TripDetails extends AppCompatActivity {
 
     @BindView(R.id.ttxtFrom)
     TextView regNum;
-
-    @BindView(R.id.dContact)
-    TextView driverContact;
 
     @BindView(R.id.ttxtTo)
     TextView vehicleExtColor;
@@ -92,8 +90,23 @@ public class TripDetails extends AppCompatActivity {
     @BindView(R.id.ctextAmount)
     TextView txtAmount;
 
+    @BindView(R.id.txtService)
+    TextView textService;
+
     @BindView(R.id.infoConatainer)
     ConstraintLayout infoContainer;
+
+    @BindView(R.id.txtVehicleInfo)
+    TextView driverState;
+
+    @BindView(R.id.textView_dContact)
+    TextView driverContact;
+
+    @BindView(R.id.txtVnum)
+    TextView vehicleNum;
+
+    @BindView(R.id.txtVcolor)
+    TextView vehicleColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,9 +194,9 @@ public class TripDetails extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.dContact)
-    public void callNumber(){
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://"+driverContact.getText().toString().trim())));
+    @OnClick(R.id.textView_dContact)
+    public void getContact(){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel://"+ driverContact.getText().toString().trim())));
     }
 
     @OnClick(R.id.cbtnCancel)
@@ -193,7 +206,7 @@ public class TripDetails extends AppCompatActivity {
 
     public void getTripData(){
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("trip details");
-        cUID = user.getUid();
+//        cUID = user.getUid();
         dRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -201,6 +214,8 @@ public class TripDetails extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     TripDetailsData tripDetailsDatas = ds.getValue(TripDetailsData.class);
                     if(tripDetailsDatas != null){
+//                        Log.d("trip details", tripDetailsDatas.getUserId());
+//                        Log.d("trip booking id", tripDetailsDatas.getBookingId());
                         if((tripDetailsDatas.getStatus()).equals("1") && (tripDetailsDatas.getUserId()).equals(cUID) && tripDetailsDatas.getBookingId().equals(bookingid)){
                             tripDetailsData = ds.getValue(TripDetailsData.class);
                             driverId = tripDetailsData.getDriverId();
@@ -209,6 +224,7 @@ public class TripDetails extends AppCompatActivity {
                             getAssignedVehicle();
 
                             return;
+
                         }else {
                             infoContainer.setVisibility(View.GONE);
                         }
@@ -228,7 +244,7 @@ public class TripDetails extends AppCompatActivity {
 
     public void getUserInfo(){
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("bookings");
-        cUID = user.getUid();
+        //cUID = user.getUid();
         dRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -237,11 +253,12 @@ public class TripDetails extends AppCompatActivity {
                     if(ds.getKey().equals(cUID)){
                         for(DataSnapshot ds1 : ds.getChildren()){
                             Log.d("booking id", ds1.getKey());
-                            Bookings booking = ds1.getValue(Bookings.class);
+                            Bookings  booking = ds1.getValue(Bookings.class);
                             booking.setId(ds1.getKey());
                             if((booking.getStatus()).equals("1") && booking.getId().equals(bookingid)){
                                 bookings = ds1.getValue(Bookings.class);
                                 bookings.setId(ds1.getKey());
+                                textService.setText(bookings.getServiceType());
                                 utextName.setText(bookings.getName());
                                 utextFrom.setText(bookings.getFrom());
                                 utxtTo.setText(bookings.getTo());
@@ -282,10 +299,11 @@ public class TripDetails extends AppCompatActivity {
                             vehicleId = assignVehicleData.getVehicleId();
                             getDriverInfo();
                         }
-                    }
-                    else {
 
                     }
+                }
+                if(vehicleId.equals("")){
+                    getDriverInfo();
                 }
             }
 
@@ -330,10 +348,10 @@ public class TripDetails extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     if(dataSnapshot1.getKey().equals(vehicleId)){
                         vehicleData = dataSnapshot1.getValue(VehicleData.class);
-                        Log.d("driver info", vehicleData.getRegistrationNumber());
-                        bindText();
-                        infoContainer.setVisibility(View.VISIBLE);
                     }
+                    getUserInfo();
+                    bindText();
+                    infoContainer.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -345,24 +363,24 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void bindText(){
-        textName.setText(driverDeal.getDisplayName());
-        driverContact.setText(driverDeal.getPhoneNumber());
-        regNum.setText(vehicleData.getRegistrationNumber());
-        vehicleExtColor.setText(vehicleData.getExteriorColor());
+        if(vehicleId == ""){
+
+            vehicleColor.setVisibility(View.INVISIBLE);
+            vehicleNum.setVisibility(View.GONE);
+            textName.setText(driverDeal.getDisplayName());
+            driverContact.setText(driverDeal.getPhoneNumber());
+
+            String state = " is not online, Please Contact Him or SmartCabGh";
+            driverState.setText(driverDeal.getDisplayName() + " " + state );
+        }else {
+            textName.setText(driverDeal.getDisplayName());
+            driverContact.setText(driverDeal.getPhoneNumber());
+            regNum.setText(vehicleData.getRegistrationNumber());
+            vehicleExtColor.setText(vehicleData.getExteriorColor());
+        }
+
     }
 
-    @Override
-    public void onBackPressed() {
-
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Confirmed Request");
-        // intent.putExtra("state",);
-        startActivity(intent);
-        finish();
-
-
-        super.onBackPressed();
-    }
 
     public void updateTrip(){
         tripDetailsData.setStatus("-1");
@@ -384,6 +402,7 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void updateBookings(){
+        getUserInfo();
         bookings.setStatus("-1");
         bookings.setMsg(msg);
         databaseReference.child(user.getUid()).child(bookingid).setValue(bookings);
