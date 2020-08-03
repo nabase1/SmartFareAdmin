@@ -37,6 +37,17 @@ public class ListServices extends AppCompatActivity {
     TextView textViewHead;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mDealLinearManager;
+    private PendingBookingAdapter mPendingBookingAdapter;
+    private DealAdapter mDealAdapter;
+    private ConfirmedBooking mConfirmedBooking;
+    private BookingCancelledAdapter mBookingCancelledAdapter;
+    private CompletedTripAdapter mCompletedTripAdapter;
+    private DriversAdapter mDriversAdapter;
+    private Confirmed_drivers mConfirmedDrivers;
+    private VehicleAdapter mVehicleAdapter;
+    private MeterCompletedTripAdapter mMeterCompletedTripAdapter;
+    private DriversPersonalOngoingTripAdapter mDriversPersonalOngoingTripAdapter;
+    private DriversOnline mDriversOnline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,48 +106,48 @@ public class ListServices extends AppCompatActivity {
 
         if(option.equals("Pending Request")){
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            final PendingBookingAdapter adapter = new PendingBookingAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mPendingBookingAdapter = new PendingBookingAdapter();
+            mRecyclerView.setAdapter(mPendingBookingAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("services")){
             FirebaseUtils.openFirebaseUtils("services",this);
-            final DealAdapter adapter = new DealAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mDealAdapter = new DealAdapter();
+            mRecyclerView.setAdapter(mDealAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Confirmed Request")){
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            final ConfirmedBooking adapter = new ConfirmedBooking();
-            mRecyclerView.setAdapter(adapter);
+            mConfirmedBooking = new ConfirmedBooking();
+            mRecyclerView.setAdapter(mConfirmedBooking);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Cancelled Bookings")){
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            final BookingCancelledAdapter adapter = new BookingCancelledAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mBookingCancelledAdapter = new BookingCancelledAdapter();
+            mRecyclerView.setAdapter(mBookingCancelledAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Completed Trips")){
             FirebaseUtils.openFirebaseUtils("bookings",this);
-            final CompletedTripAdapter adapter = new CompletedTripAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mCompletedTripAdapter = new CompletedTripAdapter();
+            mRecyclerView.setAdapter(mCompletedTripAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
         }
 
         if(option.equals("Pending Drivers")){
             FirebaseUtils.openFirebaseUtils("drivers profile", this);
-            final DriversAdapter adapter = new DriversAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mDriversAdapter = new DriversAdapter();
+            mRecyclerView.setAdapter(mDriversAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
@@ -144,8 +155,8 @@ public class ListServices extends AppCompatActivity {
 
         if(option.equals("Confirmed Drivers")){
             FirebaseUtils.openFirebaseUtils("drivers profile", this);
-            final Confirmed_drivers adapter = new Confirmed_drivers();
-            mRecyclerView.setAdapter(adapter);
+            mConfirmedDrivers = new Confirmed_drivers();
+            mRecyclerView.setAdapter(mConfirmedDrivers);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
@@ -153,8 +164,8 @@ public class ListServices extends AppCompatActivity {
 
         if(option.equals("Vehicles")){
             FirebaseUtils.openFirebaseUtils("vehicles details", this);
-            final VehicleAdapter adapter = new VehicleAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mVehicleAdapter = new VehicleAdapter();
+            mRecyclerView.setAdapter(mVehicleAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
@@ -162,15 +173,15 @@ public class ListServices extends AppCompatActivity {
 
         if(option.equals("Meter Trips")){
             FirebaseUtils.openFirebaseUtils("Meter Trip", this);
-            final MeterCompletedTripAdapter adapter = new MeterCompletedTripAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mMeterCompletedTripAdapter = new MeterCompletedTripAdapter();
+            mRecyclerView.setAdapter(mMeterCompletedTripAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
         }
 
         if(option.equals("Ongoing Meter Trips")){
             FirebaseUtils.openFirebaseUtils("Meter Trip", this);
-            final DriversPersonalOngoingTripAdapter adapter = new DriversPersonalOngoingTripAdapter();
-            mRecyclerView.setAdapter(adapter);
+            mDriversPersonalOngoingTripAdapter = new DriversPersonalOngoingTripAdapter();
+            mRecyclerView.setAdapter(mDriversPersonalOngoingTripAdapter);
             mRecyclerView.setLayoutManager(mDealLinearManager);
 
 
@@ -179,8 +190,8 @@ public class ListServices extends AppCompatActivity {
         if(option.equals("Drivers Online")){
 
             FirebaseUtils.openFirebaseUtils("drivers online", this);
-            final DriversOnline adapter = new DriversOnline();
-            mRecyclerView.setAdapter(adapter);
+            mDriversOnline = new DriversOnline();
+            mRecyclerView.setAdapter(mDriversOnline);
             mRecyclerView.setLayoutManager(mDealLinearManager);
         }
     }
@@ -189,6 +200,59 @@ public class ListServices extends AppCompatActivity {
         textViewHead.setText(choice);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerdeals);
         mDealLinearManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshList();
+    }
+
+    public void refreshList(){
+
+        if(choice.equals("Pending Request")){
+            mPendingBookingAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("services")){
+            mDealAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Confirmed Request")){
+            mConfirmedBooking.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Cancelled Bookings")){
+            mBookingCancelledAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Completed Trips")){
+            mCompletedTripAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Pending Drivers")){
+            mDriversAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Confirmed Drivers")){
+            mConfirmedDrivers.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Vehicles")){
+            mVehicleAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Meter Trips")){
+            mMeterCompletedTripAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Ongoing Meter Trips")){
+            mDriversPersonalOngoingTripAdapter.notifyDataSetChanged();
+        }
+
+        if(choice.equals("Drivers Online")){
+            mDriversOnline.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -239,6 +303,10 @@ public class ListServices extends AppCompatActivity {
                 || choice.equals("Cancelled Bookings") || choice.equals("Completed Trips")
                 || choice.equals("Confirmed Drivers")  || choice.equals("Pending Drivers") ){
            loadListView(choice);
+        }
+
+        if(item.getItemId() == R.id.action_refresh){
+            refreshList();
         }
 
         return super.onOptionsItemSelected(item);
