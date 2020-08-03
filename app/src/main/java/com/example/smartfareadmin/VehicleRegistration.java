@@ -159,10 +159,6 @@ public class VehicleRegistration extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        backToList();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -270,7 +266,7 @@ public class VehicleRegistration extends AppCompatActivity {
         else {
             vehicleData.setRegistrationDate(vehicleData.getRegistrationDate());
             databaseReference.child(vehicleData.getId()).setValue(vehicleData);
-            backToList();
+            onBackPressed();
             Toast.makeText(this, "Vehicle Updated", Toast.LENGTH_SHORT).show();
         }
 
@@ -306,7 +302,7 @@ public class VehicleRegistration extends AppCompatActivity {
         }else{
             databaseReference.child(vehicleData.getId()).removeValue();
             Toast.makeText(this, "Vehicle deleted", Toast.LENGTH_SHORT).show();
-            backToList();
+             onBackPressed();
         }
 
     }

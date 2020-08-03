@@ -334,12 +334,6 @@ public class RegisterDriver extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
     public void deleteDriver(){
         if(driverDeal.getId() == null){
             Toast.makeText(this, "No Driver is selected", Toast.LENGTH_SHORT).show();

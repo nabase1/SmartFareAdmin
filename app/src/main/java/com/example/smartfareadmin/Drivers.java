@@ -31,13 +31,9 @@ public class Drivers extends AppCompatActivity {
     public void ConfirmedDrivers(View view){
         Intent intent = new Intent(this, ListServices.class);
         intent.putExtra("choice","Confirmed Drivers");
+        startActivity(intent);
     }
 
-    public void getVehicle(View view){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Vehicles");
-        finish();
-    }
 
     public void backPress(View view){
         onBackPressed();
