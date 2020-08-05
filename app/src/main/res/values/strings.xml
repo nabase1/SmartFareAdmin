@@ -79,6 +79,15 @@
     <string name="code_generator">Code Generator</string>
     <string name="manage_services">Manage Services</string>
     <string name="service_type">Service Type</string>
+    <string name="total_fare">Total Fare :</string>
+    <string name="driver_info">Driver Info</string>
+    <string name="email">Email :</string>
+    <string name="name">Name :</string>
+    <string name="license">License :</string>
+    <string name="address">Address :</string>
+    <string name="vehicle">Vehicle:</string>
+    <string name="location">Location:</string>
+    <string name="todo">TODO</string>
 
 </resources>
 

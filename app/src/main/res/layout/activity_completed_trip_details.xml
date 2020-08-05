@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewHead">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +61,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/client"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/uTextName"
                         app:layout_constraintStart_toStartOf="parent"
@@ -69,16 +69,17 @@
 
                     <TextView
                         android:id="@+id/uTextName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="Nabase"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.463"
-                        app:layout_constraintStart_toEndOf="@+id/utxtNameTitle"
+                        app:layout_constraintStart_toStartOf="@+id/utxtFrom"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -88,7 +89,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/fromtxt"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/utxtFrom"
                         app:layout_constraintStart_toStartOf="parent"
@@ -97,16 +98,17 @@
 
                     <TextView
                         android:id="@+id/utxtFrom"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="Tanoso"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.479"
-                        app:layout_constraintStart_toEndOf="@+id/utxtFromTitle"
+                        app:layout_constraintStart_toStartOf="@+id/utxtTo"
                         app:layout_constraintTop_toBottomOf="@+id/uTextName" />
 
                     <TextView
@@ -116,7 +118,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/to"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/utxtTo"
                         app:layout_constraintStart_toStartOf="parent"
@@ -124,16 +126,17 @@
 
                     <TextView
                         android:id="@+id/utxtTo"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="Sofoline"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.671"
-                        app:layout_constraintStart_toEndOf="@+id/utxtToTitle"
+                        app:layout_constraintStart_toStartOf="@+id/uPickupDate"
                         app:layout_constraintTop_toBottomOf="@+id/utxtFrom" />
 
                     <TextView
@@ -143,7 +146,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/pick_up_date"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/uPickupDate"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,16 +154,17 @@
 
                     <TextView
                         android:id="@+id/uPickupDate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="16/12/2019"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.365"
-                        app:layout_constraintStart_toEndOf="@+id/txtPickupTitle"
+                        app:layout_constraintStart_toStartOf="@+id/uPickUpTime"
                         app:layout_constraintTop_toBottomOf="@+id/utxtTo" />
 
                     <TextView
@@ -170,7 +174,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/pick_up_time"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/uPickUpTime"
                         app:layout_constraintStart_toStartOf="parent"
@@ -178,15 +182,17 @@
 
                     <TextView
                         android:id="@+id/uPickUpTime"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="1:30"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.381"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/txtPickTime"
                         app:layout_constraintTop_toBottomOf="@+id/uPickupDate" />
 
@@ -199,7 +205,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/amount"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/utextAmount"
                         app:layout_constraintStart_toStartOf="parent"
@@ -207,17 +213,18 @@
 
                     <TextView
                         android:id="@+id/utextAmount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="Ghc 10"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.381"
-                        app:layout_constraintStart_toEndOf="@+id/txtPickTime"
+                        app:layout_constraintStart_toStartOf="@+id/uPickUpTime"
                         app:layout_constraintTop_toBottomOf="@+id/uPickUpTime" />
 
 
@@ -226,7 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="36dp"
-                        android:text="Driver Info"
+                        android:text="@string/driver_info"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -242,7 +249,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/driver_name"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/dTextNum"
                         app:layout_constraintStart_toStartOf="parent"
@@ -251,18 +258,19 @@
 
                     <TextView
                         android:id="@+id/dTextNum"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="Nabase"
-                        android:textAlignment="center"
-                        android:textSize="15dp"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.463"
-                        app:layout_constraintStart_toEndOf="@+id/txtNameTitle"
-                        app:layout_constraintTop_toBottomOf="@id/txtDriverInfo"
-                        android:visibility="gone"/>
+                        app:layout_constraintStart_toStartOf="@+id/utextAmount"
+                        app:layout_constraintTop_toBottomOf="@id/txtDriverInfo" />
 
                     <TextView
                         android:id="@+id/txtPhonetitle"
@@ -271,7 +279,7 @@
                         android:layout_marginStart="16dp"
                         android:fontFamily="@font/el_messiri_bold"
                         android:text="@string/driver_contact"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/dContact"
                         app:layout_constraintStart_toStartOf="parent"
@@ -280,19 +288,20 @@
 
                     <TextView
                         android:id="@+id/dContact"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/livingston_sanserif"
-                        android:text="0553181665"
-                        android:textAlignment="center"
+                        android:text=""
+                        android:textAlignment="textStart"
                         android:textColor="@color/colorBlue"
-                        android:textSize="15dp"
+                        android:textSize="15sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.474"
-                        app:layout_constraintStart_toEndOf="@+id/txtPhonetitle"
-                        app:layout_constraintTop_toBottomOf="@+id/dTextNum"
-                        android:visibility="gone"/>
+                        app:layout_constraintStart_toStartOf="@+id/dTextNum"
+                        app:layout_constraintTop_toBottomOf="@+id/dTextNum" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

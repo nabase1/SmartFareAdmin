@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Drivers Name :"
+            android:text="@string/driver_name"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:fontFamily="@font/el_messiri_bold"
             app:layout_constraintBottom_toBottomOf="@+id/dTextNum"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,15 +31,17 @@
 
         <TextView
             android:id="@+id/dTextNum"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="36dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/lux_montag"
-            android:text="Nabase"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/txtNameTitle"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/el_messiri_bold"
-            android:text="Client Name :"
-            android:textSize="20dp"
+            android:text="@string/client"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/cTextNum"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,17 +60,18 @@
 
         <TextView
             android:id="@+id/cTextNum"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/lux_montag"
-            android:text="Nabase"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.47"
-            app:layout_constraintStart_toEndOf="@+id/ctxtNameTitle"
-            app:layout_constraintTop_toBottomOf="@id/dTextNum"/>
+            app:layout_constraintStart_toStartOf="@+id/dTextNum"
+            app:layout_constraintTop_toBottomOf="@id/dTextNum" />
 
 
         <TextView
@@ -76,9 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Contact :"
+            android:text="@string/contact"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:fontFamily="@font/el_messiri_bold"
             app:layout_constraintBottom_toBottomOf="@+id/dContact"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,16 +89,17 @@
 
         <TextView
             android:id="@+id/dContact"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/lux_montag"
-            android:text="0553181665"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toEndOf="@+id/txtPhonetitle"
+            app:layout_constraintStart_toStartOf="@+id/cTextNum"
             app:layout_constraintTop_toBottomOf="@+id/cTextNum" />
 
         <TextView
@@ -114,18 +118,17 @@
 
         <TextView
             android:id="@+id/ttxtFrom"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginEnd="35dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/lux_montag"
-            android:text="Tanoso"
-            android:textSize="15dp"
-            android:textAlignment="center"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.479"
-            app:layout_constraintStart_toEndOf="@+id/txtFromTitle"
+            app:layout_constraintStart_toStartOf="@+id/dContact"
             app:layout_constraintTop_toBottomOf="@+id/dContact" />
 
         <TextView
@@ -143,18 +146,17 @@
 
         <TextView
             android:id="@+id/ttxtTo"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="35dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/lux_montag"
-            android:text="Sofoline"
-            android:textSize="15dp"
-            android:textAlignment="center"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.671"
-            app:layout_constraintStart_toEndOf="@+id/txtToTitle"
+            app:layout_constraintStart_toStartOf="@+id/ttxtFrom"
             app:layout_constraintTop_toBottomOf="@+id/ttxtFrom" />
 
 
@@ -173,18 +175,19 @@
 
         <TextView
             android:id="@+id/ctextAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/lux_montag"
-            android:text="34 GHC"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toEndOf="@+id/txtAmountTitle"
+            app:layout_constraintStart_toStartOf="@+id/ttxtTo"
             app:layout_constraintTop_toBottomOf="@+id/ttxtTo"
             app:layout_constraintVertical_bias="0.0" />
 

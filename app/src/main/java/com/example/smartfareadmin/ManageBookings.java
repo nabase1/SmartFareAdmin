@@ -332,7 +332,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     for(DataSnapshot ds: dataSnapshot1.getChildren()){
                         DriverDeal dDeals = ds.getValue(DriverDeal.class);
-                        if(dDeals.getStatus().equals("0")){
+                        if(dDeals.getStatus().equals("1")){
                             String driverId = dataSnapshot1.getKey();
                             driverIdArray.add(driverId);
                             dDeals.setId(ds.getKey());
@@ -473,7 +473,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void updateDriverDetails(){
-        dDeal.setStatus("1");
+        dDeal.setStatus("2");
         if(dDeal.getId() != null){
             DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
             dRef.child(driverId).child(dDeal.getId()).setValue(dDeal);

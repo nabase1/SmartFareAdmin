@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartfareadmin.activities.Constants;
@@ -175,8 +176,17 @@ public class ChooseVehicle extends AppCompatActivity implements AdapterView.OnIt
     public void updateVehicle(){
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("vehicles details");
         if(vehicleData.getId() != null){
-            dRef.child(vehicleData.getId()).setValue(vehicleData);
-            saveAssignVehicle();
+            dRef.child(vehicleData.getId()).setValue(vehicleData, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    if(error != null){
+                        Toast.makeText(ChooseVehicle.this, "There is a problem!, Please Wait", Toast.LENGTH_SHORT).show();
+                    }else {
+                        saveAssignVehicle();
+                    }
+                }
+            });
+
         }
         else {
             Toast.makeText(this, "Vehicle is null!", Toast.LENGTH_SHORT).show();

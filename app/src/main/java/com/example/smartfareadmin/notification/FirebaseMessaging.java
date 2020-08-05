@@ -66,27 +66,29 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
             }
             else {
-                if(user != null){
+//                if(user != null){
+//
+//                    if(user.equals("pending")){
+//                        sendNormalNotification(remoteMessage, BookingRequest.class);
+//                    }
+//
+//                    if(user.equals("completed")){
+//                        sendNormalNotification(remoteMessage, Trips.class);
+//                    }
+//                    if(user.equals("confirm")){
+//                        sendNormalNotification(remoteMessage, BookingRequest.class);
+//                    }
+//                    if(user.equals("startTrip")){
+//                        sendNormalNotification(remoteMessage, Trips.class);
+//                    }
+//                    if(user.equals("completeTrip")){
+//                        sendNormalNotification(remoteMessage, Trips.class);
+//                    }
+//                }else {
+//                    sendNormalNotification(remoteMessage, AdminActivity.class);
+//                }
 
-                    if(user.equals("pending")){
-                        sendNormalNotification(remoteMessage, BookingRequest.class);
-                    }
-
-                    if(user.equals("completed")){
-                        sendNormalNotification(remoteMessage, Trips.class);
-                    }
-                    if(user.equals("confirm")){
-                        sendNormalNotification(remoteMessage, BookingRequest.class);
-                    }
-                    if(user.equals("startTrip")){
-                        sendNormalNotification(remoteMessage, Trips.class);
-                    }
-                    if(user.equals("completeTrip")){
-                        sendNormalNotification(remoteMessage, Trips.class);
-                    }
-                }else {
-                    sendNormalNotification(remoteMessage, AdminActivity.class);
-                }
+                sendNormalNotification(remoteMessage, AdminActivity.class);
 
 
             }
@@ -146,7 +148,6 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         Intent intent = new Intent(this, cls);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pIntent = PendingIntent.getActivity(this,i,intent,PendingIntent.FLAG_ONE_SHOT);
-
 
         Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

@@ -49,7 +49,7 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     DriverDeal dDeal = ds.getValue(DriverDeal.class);
 
-                    if(dDeal.getStatus().equals("0")){
+                    if(dDeal.getStatus().equals("0") || dDeal.getStatus().equals("1") || dDeal.getStatus().equals("2")){
                         userId = ds.getKey();
                         Log.d("driver id", userId);
                         userIdArray.add(dataSnapshot.getKey());

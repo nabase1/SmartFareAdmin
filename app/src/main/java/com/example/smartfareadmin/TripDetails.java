@@ -370,7 +370,7 @@ public class TripDetails extends AppCompatActivity {
             textName.setText(driverDeal.getDisplayName());
             driverContact.setText(driverDeal.getPhoneNumber());
 
-            String state = " is not online, Please Contact Him or SmartCabGh";
+            String state = " is not online, Please Contact Driver";
             driverState.setText(driverDeal.getDisplayName() + " " + state );
         }else {
             textName.setText(driverDeal.getDisplayName());
