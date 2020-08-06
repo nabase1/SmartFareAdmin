@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartfareadmin.CompletedTripDetails;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.dataObjects.Bookings;
+import com.example.smartfareadmin.dataObjects.driverBooking;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,12 +26,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancelledAdapter.BookingViewHolder> {
 
-    ArrayList<Bookings> bookingsArrayList;
-    ArrayList<String> bookingidArrayList;
+    ArrayList<Bookings> bookingsArrayList,bookingidArrayList;
+    //ArrayList<String> bookingidArrayList;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
@@ -39,7 +41,7 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
     public BookingCancelledAdapter(){
         bookings = new Bookings();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
-        bookingidArrayList = new ArrayList<String>();
+        bookingidArrayList = new ArrayList<Bookings>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
 
@@ -52,10 +54,26 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
                     if((bookings.getStatus()).equals("-1")){
                         bookings.setId(ds.getKey());
                         bookingsArrayList.add(bookings);
-                        bookingidArrayList.add(ds.getKey());
+                        bookingidArrayList.add(bookings);
 
-                        Collections.reverse(bookingsArrayList);
-                        Collections.reverse(bookingidArrayList);
+                        Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
+                            @Override
+                            public int compare(Bookings o1, Bookings o2) {
+                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
+                                        Long.parseLong(o2.getDateTime().toString()));
+                            }
+                        });
+
+//                        Collections.sort(bookingidArrayList, new Comparator<Bookings>() {
+//                            @Override
+//                            public int compare(Bookings o1, Bookings o2) {
+//                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
+//                                        Long.parseLong(o2.getDateTime().toString()));
+//                            }
+//                        });
+
+//                        Collections.reverse(bookingsArrayList);
+//                        Collections.reverse(bookingidArrayList);
                     }
 
                 }
@@ -145,9 +163,9 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
             Bookings getDeals = bookingsArrayList.get(position);
             Intent intent = new Intent(v.getContext(), CompletedTripDetails.class);
             intent.putExtra("Completed Bookings", getDeals);
-            intent.putExtra("bookingId", bookingidArrayList.get(position));
+           // intent.putExtra("bookingId", bookingidArrayList.get(position));
             intent.putExtra("completed", "0");
-            Log.d("bid",bookingidArrayList.get(position));
+           // Log.d("bid",bookingidArrayList.get(position));
             v.getContext().startActivity(intent);
         }
     }

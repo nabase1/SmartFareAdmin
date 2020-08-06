@@ -24,10 +24,16 @@ public class Bookings implements Serializable {
    private String totalFare;
    private String serviceType;
     private Long dateTime;
+    private String uid;
 
     public Bookings(){}
 
-    public Bookings(String name, String phoneNumber, String from, String to, String pick_up_date, String pick_up_time, String amount, String status, String distance, String duration, String fromLatitude, String fromLongitude, String toLatitude, String toLongitude, String msg, String totalFare, String serviceType, Long dateTime) {
+    public Bookings(String name, String phoneNumber,
+                    String from, String to, String pick_up_date,
+                    String pick_up_time, String amount, String status,
+                    String distance, String duration, String fromLatitude,
+                    String fromLongitude, String toLatitude, String toLongitude,
+                    String msg, String totalFare, String serviceType, Long dateTime, String uid) {
         this.setId(id);
         this.setName(name);
         this.setPhoneNumber(phoneNumber);
@@ -47,6 +53,15 @@ public class Bookings implements Serializable {
         this.setTotalFare(totalFare);
         this.setServiceType(serviceType);
         this.setDateTime(dateTime);
+        this.setUid(uid);
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getId() {

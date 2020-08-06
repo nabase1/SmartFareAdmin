@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 public class ConfirmedBooking extends RecyclerView.Adapter<ConfirmedBooking.BookingViewHolder> {
@@ -56,13 +57,21 @@ public class ConfirmedBooking extends RecyclerView.Adapter<ConfirmedBooking.Book
                     bookings = ds.getValue(Bookings.class);
                     if((bookings.getStatus()).equals("1")){
                         bookings.setId(ds.getKey());
-                        bookingidArrayList.add(ds.getKey());
-                        userIdArray.add(dataSnapshot.getKey());
+                       // bookingidArrayList.add(ds.getKey());
+                        //userIdArray.add(dataSnapshot.getKey());
                         bookingsArrayList.add(bookings);
 
-                        Collections.reverse(bookingsArrayList);
-                        Collections.reverse(userIdArray);
-                        Collections.reverse(bookingidArrayList);
+                        Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
+                            @Override
+                            public int compare(Bookings o1, Bookings o2) {
+                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
+                                        Long.parseLong(o2.getDateTime().toString()));
+                            }
+                        });
+
+                       // Collections.reverse(bookingsArrayList);
+                       // Collections.reverse(userIdArray);
+                       // Collections.reverse(bookingidArrayList);
                     }
 
                 }
@@ -152,10 +161,9 @@ public class ConfirmedBooking extends RecyclerView.Adapter<ConfirmedBooking.Book
             Bookings getDeals = bookingsArrayList.get(position);
             Intent intent = new Intent(v.getContext(), TripDetails.class);
             intent.putExtra("Confirmed Bookings", getDeals);
-            intent.putExtra("userId", userIdArray.get(position));
-            intent.putExtra("bookingId", bookingidArrayList.get(position));
-            Log.d("uid",userIdArray.get(position));
-            Log.d("bid",bookingidArrayList.get(position));
+           // intent.putExtra("userId", userIdArray.get(position));
+           // intent.putExtra("bookingId", bookingidArrayList.get(position));
+          //  Log.d("uid",userIdArray.get(position));
             v.getContext().startActivity(intent);
         }
     }

@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleViewHolder> {
 
@@ -45,6 +46,8 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
                 vehicleData.setId(dataSnapshot.getKey());
                 vehicleDataArrayList.add(vehicleData);
                 Log.d("vehicle Object", vehicleData.getEngineType());
+                Collections.reverse(vehicleDataArrayList);
+
                 notifyItemChanged(vehicleDataArrayList.size()-1);
             }
 

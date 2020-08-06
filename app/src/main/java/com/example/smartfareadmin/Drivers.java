@@ -19,7 +19,6 @@ public class Drivers extends AppCompatActivity {
         Intent intent = new Intent(this, ListServices.class);
         intent.putExtra("choice","Drivers Online");
         startActivity(intent);
-        finish();
     }
 
     public void ManageDrivers(View view){

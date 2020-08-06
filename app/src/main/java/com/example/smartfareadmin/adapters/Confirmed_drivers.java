@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.DriverViewHolder> {
 
@@ -57,6 +58,8 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
                         driverDeal.setId(ds.getKey());
                         driverDealArrayList.add(driverDeal);
 
+                        Collections.reverse(driverDealArrayList);
+                        Collections.reverse(userIdArray);
 
                     }
                 }

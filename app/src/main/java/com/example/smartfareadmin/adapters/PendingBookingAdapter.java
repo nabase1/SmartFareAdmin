@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.smartfareadmin.ManageBookings;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.dataObjects.Bookings;
@@ -21,17 +19,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
+import java.util.Comparator;
+
 
 
 public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAdapter.BookingViewHolder> {
 
     ArrayList<Bookings> bookingsArrayList;
-    ArrayList<String> userIdArray;
+  //  ArrayList<String> userIdArray;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
@@ -41,7 +38,7 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
 
     public PendingBookingAdapter(){
         bookings = new Bookings();
-        userIdArray = new ArrayList<String>();
+      //  userIdArray = new ArrayList<String>();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
@@ -49,17 +46,26 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                userId = dataSnapshot.getKey();
+               // userId = dataSnapshot.getKey();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Log.d("userIds", dataSnapshot.getKey());
                     bookings = ds.getValue(Bookings.class);
                     if((bookings.getStatus()).equals("0")){
                         bookings.setId(ds.getKey());
-                        userIdArray.add(dataSnapshot.getKey());
+                       // userIdArray.add(dataSnapshot.getKey());
                         bookingsArrayList.add(bookings);
 
-                        Collections.reverse(userIdArray);
-                        Collections.reverse(bookingsArrayList);
+
+                        Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
+                            @Override
+                            public int compare(Bookings o1, Bookings o2) {
+                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
+                                        Long.parseLong(o2.getDateTime().toString()));
+                            }
+                        });
+
+                        //Collections.reverse(userIdArray);
+                        //Collections.reverse(bookingsArrayList);
                     }
                 }
 
@@ -136,7 +142,7 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
         }
 
         public void bind(Bookings bookings){
-             Log.d("booking", userId);
+       //      Log.d("booking", userId);
             textName.setText(bookings.getName());
             textPickDate.setText(bookings.getPick_up_date());
             textPickTime.setText(bookings.getPick_up_time());
@@ -151,8 +157,8 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
             Bookings getDeals = bookingsArrayList.get(position);
             Intent intent = new Intent(v.getContext(), ManageBookings.class);
             intent.putExtra("Pending Bookings", getDeals);
-            intent.putExtra("userId", userIdArray.get(position));
-            Log.d("uid",userIdArray.get(position));
+           // intent.putExtra("userId", userIdArray.get(position));
+           // Log.d("uid",userIdArray.get(position));
             v.getContext().startActivity(intent);
         }
     }

@@ -50,7 +50,7 @@ public class TripDetails extends AppCompatActivity {
 
     DriverDeal driverDeal;
     VehicleData vehicleData;
-    Bookings bookings;
+    Bookings mBookings;
     TripDetailsData tripDetailsData;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -138,10 +138,12 @@ public class TripDetails extends AppCompatActivity {
         databaseReference = FirebaseUtils.databaseReference;
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+//
+//        Bundle bundle = getIntent().getExtras();
+//       // bookingid = bundle.getString("bookingId");
+//        cUID = bundle.getString("userId");
 
-        Bundle bundle = getIntent().getExtras();
-        bookingid = bundle.getString("bookingId");
-        cUID = bundle.getString("userId");
+
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -175,20 +177,15 @@ public class TripDetails extends AppCompatActivity {
         Intent intent = getIntent();
         Bookings booking = (Bookings) intent.getSerializableExtra("Confirmed Bookings");
 
-
-
         if(booking == null){
             booking = new Bookings();
         }
 
-        this.bookings = booking;
+        this.mBookings = booking;
+        bookingid = mBookings.getId();
+        cUID = mBookings.getUid();
 
-        utextName.setText(bookings.getName());
-        utextFrom.setText(bookings.getFrom());
-        utxtTo.setText(bookings.getTo());
-        upickUpDate.setText(bookings.getPick_up_date());
-        uPickUpTime.setText(bookings.getPick_up_time());
-        txtAmount.setText("GHC " + bookings.getAmount());
+        Log.d("uid", cUID);
 
         getTripData();
 
@@ -243,45 +240,15 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void getUserInfo(){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("bookings");
-        //cUID = user.getUid();
-        dRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    Log.d("userIds", ds.getKey());
-                    if(ds.getKey().equals(cUID)){
-                        for(DataSnapshot ds1 : ds.getChildren()){
-                            Log.d("booking id", ds1.getKey());
-                            Bookings  booking = ds1.getValue(Bookings.class);
-                            booking.setId(ds1.getKey());
-                            if((booking.getStatus()).equals("1") && booking.getId().equals(bookingid)){
-                                bookings = ds1.getValue(Bookings.class);
-                                bookings.setId(ds1.getKey());
-                                textService.setText(bookings.getServiceType());
-                                utextName.setText(bookings.getName());
-                                utextFrom.setText(bookings.getFrom());
-                                utxtTo.setText(bookings.getTo());
-                                upickUpDate.setText(bookings.getPick_up_date());
-                                uPickUpTime.setText(bookings.getPick_up_time());
-                                txtAmount.setText("GHC " + bookings.getAmount());
 
+        textService.setText(mBookings.getServiceType());
+        utextName.setText(mBookings.getName());
+        utextFrom.setText(mBookings.getFrom());
+        utxtTo.setText(mBookings.getTo());
+        upickUpDate.setText(mBookings.getPick_up_date());
+        uPickUpTime.setText(mBookings.getPick_up_time());
+        txtAmount.setText("GHC " + mBookings.getAmount());
 
-
-
-                            }
-                        }
-
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void getAssignedVehicle(){
@@ -394,7 +361,7 @@ public class TripDetails extends AppCompatActivity {
 
     public void updateDriverDetails(){
         getDriverInfo();
-        driverDeal.setStatus("0");
+        driverDeal.setStatus("1");
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
         mRef.child(driverId).child(driverDeal.getId()).setValue(driverDeal);
         updateTrip();
@@ -403,11 +370,11 @@ public class TripDetails extends AppCompatActivity {
 
     public void updateBookings(){
         getUserInfo();
-        bookings.setStatus("-1");
-        bookings.setMsg(msg);
-        databaseReference.child(user.getUid()).child(bookingid).setValue(bookings);
-        sendNotification("","SmartCab GH", bookings.getName()+ " " + "Cancelled His Request");
-        sendNotificationToFriver(driverId, "SmartCab GH", bookings.getName()+ " " + "Cancelled Your Trip");
+        mBookings.setStatus("-1");
+        mBookings.setMsg(msg);
+        databaseReference.child(user.getUid()).child(bookingid).setValue(mBookings);
+        sendNotification("","SmartCab GH", mBookings.getName()+ " " + "Cancelled His Request");
+        sendNotificationToFriver(driverId, "SmartCab GH", mBookings.getName()+ " " + "Cancelled Your Trip");
         onBackPressed();
 
     }
@@ -429,7 +396,7 @@ public class TripDetails extends AppCompatActivity {
                             .enqueue(new Callback<Response>() {
                                 @Override
                                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    Toast.makeText(TripDetails.this, response.message(), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(TripDetails.this, "response.message()", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -464,7 +431,7 @@ public class TripDetails extends AppCompatActivity {
                             .enqueue(new Callback<Response>() {
                                 @Override
                                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    Toast.makeText(TripDetails.this, response.message(), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(TripDetails.this, response.message(), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override

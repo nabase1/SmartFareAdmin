@@ -55,7 +55,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener {
 
-    Bookings bDeals;
+    Bookings mBookings;
     DriverDeal dDeal;
     TripDetailsData tripDetailsData;
     FirebaseDatabase firebaseDatabase;
@@ -65,18 +65,6 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
     private String driverId, userBookingId;
     public static ArrayList<DriverDeal> array;
     public static ArrayList<String> driverIdArray;
-    private String id;
-    private String name;
-    private String displayName;
-    private String email;
-    private String phoneNumber;
-    private String address;
-    private String driverLicense;
-    private String licenseExpireDate;
-    private String vehicle;
-    private String dstatus;
-    private String registrationDate;
-    private String imageUrl;
     AlertDialog alertDialog;
     APIServices apiServices;
     Boolean notify = false;
@@ -152,8 +140,8 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         populateSpinner(databaseReference);
         spinnerAssign.setOnItemSelectedListener(this);
 
-        Bundle bundle = getIntent().getExtras();
-        userBookingId = bundle.getString("userId");
+//        Bundle bundle = getIntent().getExtras();
+//        userBookingId = bundle.getString("userId");
 
         Intent intent = getIntent();
         Bookings bookings = (Bookings) intent.getSerializableExtra("Pending Bookings");
@@ -161,18 +149,10 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         if(bookings == null){
             bookings = new Bookings();
         }
-        this.bDeals = bookings;
+        this.mBookings = bookings;
+        userBookingId = mBookings.getUid();
 
-        bookingid = bookings.getId();
-        textName.setText(bookings.getName());
-        txtserviceType.setText(bookings.getServiceType());
-        textPhone.setText(bookings.getPhoneNumber());
-        textFrom.setText(bookings.getFrom());
-        textTo.setText(bookings.getTo());
-        textPickDate.setText(bookings.getPick_up_date());
-        textPickTime.setText(bookings.getPick_up_time());
-        textDistance.setText(bookings.getDistance());
-        textAmount.setText(bookings.getAmount());
+        bookingInformation();
 
         Log.d("id", bookings.getId());
 
@@ -206,6 +186,19 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         });
 
         alertDialog = builder.create();
+    }
+
+    private void bookingInformation() {
+        bookingid = mBookings.getId();
+        textName.setText(mBookings.getName());
+        txtserviceType.setText(mBookings.getServiceType());
+        textPhone.setText(mBookings.getPhoneNumber());
+        textFrom.setText(mBookings.getFrom());
+        textTo.setText(mBookings.getTo());
+        textPickDate.setText(mBookings.getPick_up_date());
+        textPickTime.setText(mBookings.getPick_up_time());
+        textDistance.setText(mBookings.getDistance());
+        textAmount.setText(mBookings.getAmount());
     }
 
     @OnClick(R.id.cbtnDone)
@@ -281,27 +274,27 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void UpdatedBooking(){
-        bDeals.setPick_up_date( textPickDate.getText().toString());
-        bDeals.setPick_up_time(textPickTime.getText().toString());
-        bDeals.setAmount(textAmount.getText().toString());
-        bDeals.setStatus(status);
+        mBookings.setPick_up_date( textPickDate.getText().toString());
+        mBookings.setPick_up_time(textPickTime.getText().toString());
+        mBookings.setAmount(textAmount.getText().toString());
+        mBookings.setStatus(status);
         if(status.equals("1")){
             if(driverId.equals("")){
                 Toast.makeText(this, "Assign Driver To Trip", Toast.LENGTH_SHORT).show();
             }else {
-                if(bDeals.getId() == null){
+                if(mBookings.getId() == null){
                     Toast.makeText(this, "null point exception", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Log.d("id", bDeals.getId());
-                    databaseReference.child(userBookingId).child(bDeals.getId()).setValue(bDeals);
+                    Log.d("id", mBookings.getId());
+                    databaseReference.child(userBookingId).child(mBookings.getId()).setValue(mBookings);
                     updateDriverDetails();
                 }
             }
         }else {
             Log.d("Cancelled status", status);
-            bDeals.setMsg(msg);
-            databaseReference.child(userBookingId).child(bDeals.getId()).setValue(bDeals);
+            mBookings.setMsg(msg);
+            databaseReference.child(userBookingId).child(mBookings.getId()).setValue(mBookings);
             if (notify) {
 
                 sendNotification("cancelled",userBookingId,"SmartCab GH","Request Cancelled:" + msg);

@@ -113,19 +113,23 @@ public class CompletedTripDetails extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        Bundle bundle = getIntent().getExtras();
-        bookingId = bundle.getString("bookingId");
-        stat = bundle.getString("completed");
+         Bundle bundle = getIntent().getExtras();
+         stat = bundle.getString("completed");
 
-        Log.d("booking id", bookingId);
 
         Intent intent = getIntent();
+//        Bookings bookingsId = (Bookings) intent.getSerializableExtra("bookingId");
+//        bookingId = bookingsId.getId();
+//        Log.d("booking id", bookingId);
         Bookings booking = (Bookings) intent.getSerializableExtra("Completed Bookings");
+
 
         if(booking == null){
             booking = new Bookings();
         }
+
         this.bookings = booking;
+        bookingId = bookings.getId();
 
         utextName.setText(bookings.getName());
         utextFrom.setText(bookings.getFrom());

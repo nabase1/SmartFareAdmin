@@ -20,8 +20,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Map;
 
 
 public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterCompletedTripAdapter.BookingViewHolder> {
@@ -45,12 +49,21 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
 
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Log.d("key", dataSnapshot.getKey());
+               //     Map<String, String> map = ds.getValue(Map.class);
                     driverBooking = ds.getValue(driverBooking.class);
                     if((driverBooking.getStatus()).equals("0")){
                         driverBooking.setId(ds.getKey());
                         driverBookingsArrayList.add(driverBooking);
 
-                        Collections.reverse(driverBookingsArrayList);
+                        //Collections.reverse(driverBookingsArrayList);
+
+                        Collections.sort(driverBookingsArrayList, new Comparator<driverBooking>() {
+                            @Override
+                            public int compare(driverBooking o1, driverBooking o2) {
+                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
+                                        Long.parseLong(o2.getDateTime().toString()));
+                            }
+                        });
                     }
 
                 }
@@ -107,7 +120,7 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
     }
 
     public class BookingViewHolder extends RecyclerView.ViewHolder {
-        TextView textName, textPhone, textFrom,textTo, cname,textAmount;
+        TextView textName, textPhone, textFrom,textTo, cname,textAmount,textDate;
 
 
         public BookingViewHolder(@NonNull View itemView) {
@@ -119,6 +132,7 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
           textTo = (TextView) itemView.findViewById(R.id.ttxtTo);
           cname = (TextView) itemView.findViewById(R.id.cTextNum);
           textAmount = (TextView) itemView.findViewById(R.id.ctextAmount);
+          textDate = (TextView) itemView.findViewById(R.id.dateTextView);
 
 
 
@@ -126,12 +140,18 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
 
         public void bind(driverBooking driverBooking){
 
+            Date date=new Date(driverBooking.getDateTime());
+            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-YYYY  HH:mm:ss");
+            sfd.format(date);
+            String dateTime = date.toString();
+
             textName.setText(driverBooking.getDriverName());
             textPhone.setText(driverBooking.getClientNumber());
             textFrom.setText(driverBooking.getFrom());
             textTo.setText(driverBooking.getTo());
             cname.setText(driverBooking.getClientName());
             textAmount.setText(driverBooking.getPrice());
+            textDate.setText(dateTime);
 
         }
 
