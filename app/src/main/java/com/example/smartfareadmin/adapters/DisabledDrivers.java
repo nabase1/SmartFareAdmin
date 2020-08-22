@@ -2,15 +2,14 @@ package com.example.smartfareadmin.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.RegisterDriver;
 import com.example.smartfareadmin.dataObjects.DriverDeal;
@@ -25,18 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverViewHolder> {
+public class DisabledDrivers extends RecyclerView.Adapter<DisabledDrivers.DriverViewHolder> {
 
     ArrayList<DriverDeal> driverDealArrayList;
     ArrayList<String> userIdArray;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private ChildEventListener childEventListener;
     private ValueEventListener mValueEventListener;
     DriverDeal driverDeal;
     public String userId;
 
-    public DriversAdapter(){
+    public DisabledDrivers(){
 
         driverDealArrayList = FirebaseUtils.driverDealArrayList;
         userIdArray = new ArrayList<String>();
@@ -50,7 +48,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
                 for (DataSnapshot ds: snapshot.getChildren()){
                     DriverDeal dDeal = ds.getValue(DriverDeal.class);
 
-                    if(dDeal.getStatus().equals("-1")){
+                    if(dDeal.getStatus().equals("-2")){
 
                         driverDeal = ds.getValue(DriverDeal.class);
                         driverDealArrayList.add(driverDeal);

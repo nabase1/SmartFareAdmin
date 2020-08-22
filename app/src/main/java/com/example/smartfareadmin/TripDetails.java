@@ -202,38 +202,33 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void getTripData(){
+
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("trip details");
-//        cUID = user.getUid();
-        dRef.addValueEventListener(new ValueEventListener() {
+
+        Query query = dRef.orderByChild(bookingid);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                    for(DataSnapshot dataSnapshot : dataSnapshot1.getChildren()){
+                        tripDetailsData = dataSnapshot.getValue(TripDetailsData.class);
+                        if((tripDetailsData.getStatus()).equals("1")){
 
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    TripDetailsData tripDetailsDatas = ds.getValue(TripDetailsData.class);
-                    if(tripDetailsDatas != null){
-//                        Log.d("trip details", tripDetailsDatas.getUserId());
-//                        Log.d("trip booking id", tripDetailsDatas.getBookingId());
-                        if((tripDetailsDatas.getStatus()).equals("1") && (tripDetailsDatas.getUserId()).equals(cUID) && tripDetailsDatas.getBookingId().equals(bookingid)){
-                            tripDetailsData = ds.getValue(TripDetailsData.class);
+                            tripDetailsData = dataSnapshot.getValue(TripDetailsData.class);
                             driverId = tripDetailsData.getDriverId();
-                            tripDetailsData.setId(ds.getKey());
-                            Log.d("trip details", tripDetailsData.getDriverId());
                             getAssignedVehicle();
-
                             return;
-
                         }else {
                             infoContainer.setVisibility(View.GONE);
+                            Log.d("no tip","trip doesnt exist");
                         }
-                    }
-                    else {
-                        infoContainer.setVisibility(View.GONE);
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -252,54 +247,43 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void getAssignedVehicle(){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("assigned vehicles");
+        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child(getString(R.string.assigned_vehicles));
 
-        dRef.addValueEventListener(new ValueEventListener() {
+        Query query = dRef.orderByKey().equalTo(driverId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    AssignVehicleData assignVehicleData = ds.getValue(AssignVehicleData.class);
-                    Log.d("ds key", ds.getKey());
-                    if(assignVehicleData != null){
-                        if((assignVehicleData.getStatus()).equals("1") && (assignVehicleData.getDriverId()).equals(driverId)){
-                            Log.d("Assign vehicle", assignVehicleData.getVehicleId());
-                            vehicleId = assignVehicleData.getVehicleId();
-                            getDriverInfo();
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
+                            AssignVehicleData assignVehicleData = dataSnapshot2.getValue(AssignVehicleData.class);
+                            if(assignVehicleData.getStatus().equals("1"))
+                                vehicleId = assignVehicleData.getVehicleId();
+                                getDriverInfo();
+                            break;
                         }
-
                     }
                 }
-                if(vehicleId.equals("")){
-                    getDriverInfo();
-                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-
     }
 
     public void getDriverInfo(){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
-        dRef.addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child(getString(R.string.drivers_profile));
+
+        Query query = mRef.orderByKey().equalTo(driverId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.getKey().equals(driverId)){
-                        for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
-
-                            driverDeal = dataSnapshot2.getValue(DriverDeal.class);
-                            Log.d("driver Info", driverDeal.getDisplayName());
-                            getVehicleInfo();
-                        }
-                    }
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    driverDeal = dataSnapshot1.getValue(DriverDeal.class);
+                    getVehicleInfo();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -330,7 +314,7 @@ public class TripDetails extends AppCompatActivity {
     }
 
     public void bindText(){
-        if(vehicleId == ""){
+        if(vehicleId.equals("")){
 
             vehicleColor.setVisibility(View.INVISIBLE);
             vehicleNum.setVisibility(View.GONE);

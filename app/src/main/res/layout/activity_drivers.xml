@@ -168,6 +168,39 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_margin="12dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <Button
+                            android:id="@+id/btn_disabled_drivers"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/deactivated_driver"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:onClick="DisabledDrivers"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="@string/deactivated_drivers"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
             </GridLayout>
 
         </LinearLayout>

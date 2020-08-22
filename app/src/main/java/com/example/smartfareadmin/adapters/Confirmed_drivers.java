@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,35 +33,29 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
+    private ValueEventListener mValueEventListener;
     DriverDeal driverDeal;
     public String userId;
 
     public Confirmed_drivers(){
 
         driverDealArrayList = FirebaseUtils.driverDealArrayList;
-        userIdArray = new ArrayList<String>();
         driverDeal = new DriverDeal();
          firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
 
-        childEventListener = new ChildEventListener() {
+        mValueEventListener = new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds: snapshot.getChildren()){
                     DriverDeal dDeal = ds.getValue(DriverDeal.class);
 
                     if(dDeal.getStatus().equals("0") || dDeal.getStatus().equals("1") || dDeal.getStatus().equals("2")){
-                        userId = ds.getKey();
-                        Log.d("driver id", userId);
-                        userIdArray.add(dataSnapshot.getKey());
+
                         driverDeal = ds.getValue(DriverDeal.class);
-                        driverDeal.setId(ds.getKey());
                         driverDealArrayList.add(driverDeal);
 
                         Collections.reverse(driverDealArrayList);
-                        Collections.reverse(userIdArray);
-
                     }
                 }
 
@@ -68,27 +63,12 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         };
-        databaseReference.addChildEventListener(childEventListener);
 
+        databaseReference.addListenerForSingleValueEvent(mValueEventListener);
     }
 
     @NonNull
@@ -143,8 +123,6 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
             DriverDeal getDeals = driverDealArrayList.get(position);
             Intent intent = new Intent(v.getContext(), RegisterDriver.class);
             intent.putExtra("drivers", getDeals);
-            intent.putExtra("userId", userIdArray.get(position));
-            Log.d("uid",userIdArray.get(position));
             v.getContext().startActivity(intent);
         }
     }

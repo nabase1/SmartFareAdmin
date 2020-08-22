@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartfareadmin.activities.Constants;
 import com.example.smartfareadmin.activities.Login;
 import com.example.smartfareadmin.fragments.AdminMaps;
 import com.example.smartfareadmin.notification.Token;
+import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,7 @@ public class AdminActivity extends AppCompatActivity {
 
     String mUid;
     private  static FirebaseAuth firebaseAuth;
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,40 @@ public class AdminActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUtils.openFirebaseUtils("", this);
 
         checkUserStatus();
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUtils.attachListener();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseUtils.detachListener();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime + 2000 > System.currentTimeMillis()){
+            firebaseAuth.signOut();
+            super.onBackPressed();
+            //finish();
+            return;
+        }else {
+
+            Toast.makeText(this, "Press Again To Exit", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
+    }
 
     @OnClick(R.id.btn_booking_request)
     public void Bookbtn(){

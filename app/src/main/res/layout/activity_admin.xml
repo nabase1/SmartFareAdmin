@@ -140,7 +140,7 @@
                             android:id="@+id/btn_fare_switch"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/ic_local_taxi_black_24dp"
+                            android:background="@drawable/trips"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:onClick="getTrips"/>
@@ -179,7 +179,7 @@
                             android:id="@+id/btn_driver_online"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/pdriver"
+                            android:background="@drawable/drivers_img"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:onClick="getDrivers"/>

@@ -14,4 +14,9 @@ public class Constants {
     public static final String SP_USER = "SP_USER";
     public static final String USER_ID = "USER_ID";
     public static final String TOTAL_FARE = "TOTAL_FARE";
+    public static final String ZERO = "0";
+    public static final String ONE = "1";
+    public static final String TWO = "2";
+
+
 }

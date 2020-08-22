@@ -48,9 +48,6 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mfirebaseDatabase;
     private DatabaseReference mdatabaseReference;
-    private String work;
-    private String stat = "";
-    String driverId = "";
     private long backPressedTime;
     List<AuthUI.IdpConfig> providers;
     CodeObjects codeObjects;
@@ -100,7 +97,6 @@ public class Login extends AppCompatActivity {
 
         displaySignInButtons();
 
-        getAssignedVehicle();
 
     }
 
@@ -134,89 +130,7 @@ public class Login extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             //if successfully signed in
-            if(resultCode == RESULT_OK && work == "Customer"){
-                //get user
-
-                 mdatabaseReference.addValueEventListener(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                       if(dataSnapshot.child(user.getUid()).exists()){
-                           Intent mapIntent = new Intent(Login.this, Services.class);
-                           startActivity(mapIntent);
-                           finish();
-                       }
-
-                       else {
-                           Intent profileIntent = new Intent(Login.this, UserProfile.class);
-                           startActivity(profileIntent);
-                           finish();
-                       }
-                   }
-
-                   @Override
-                   public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("error", databaseError.getMessage());
-                   }
-               });
-
-            }else if(resultCode == RESULT_OK && work == "Driver"){
-
-                getAssignedVehicle();
-
-                DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
-
-                dRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        if(dataSnapshot.child(user.getUid()).exists()){
-                          if(driverId.equals("")){
-                              Intent intent = new Intent(Login.this, ChooseVehicle.class);
-                              startActivity(intent);
-                              finish();
-                          }else{
-                              if(driverId.equals(user.getUid())){
-
-                                  if(stat.equals("1")){
-                                      Intent mapIntent = new Intent(Login.this, DriverMap.class);
-                                      mapIntent.putExtra(Constants.DriverMap, "nonRoute");
-                                      startActivity(mapIntent);
-                                      finish();
-                                  }else {
-                                      Intent intent = new Intent(Login.this, ChooseVehicle.class);
-                                      startActivity(intent);
-                                      finish();
-                                  }
-                              }else{
-                                  Intent intent = new Intent(Login.this, ChooseVehicle.class);
-                                  startActivity(intent);
-                                  finish();
-                              }
-                          }
-
-                        }
-
-                        else {
-
-                            textCode.setVisibility(View.VISIBLE);
-                            btnConfirmCode.setVisibility(View.VISIBLE);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("error", databaseError.getMessage());
-                    }
-                });
-
-
-
-            }else if(resultCode == RESULT_OK){
+          if(resultCode == RESULT_OK){
                 Intent intent = new Intent(this, AdminActivity.class);
                 startActivity(intent);
             }
@@ -254,77 +168,16 @@ public class Login extends AppCompatActivity {
        backPressedTime = System.currentTimeMillis();
     }
 
-    @OnClick(R.id.btnDriver)
-    public void driverBtn(){
-        work = "Driver";
-        verifyDriver();
 
-        Log.d(TAG, "Driver");
-    }
-
-    @OnClick(R.id.btnCustomer)
-    public void customerBtn(){
-        work = "Customer";
-        workConstraint.setVisibility(View.INVISIBLE);
-        displaySignInButtons();
-
-        Log.d(TAG,work);
-    }
-
-    @OnClick(R.id.btnConfirm)
-    public void btnconfirmCode(){
-        confirmCode();
-    }
 
     @OnClick({R.id.buttonAdmin})
     public void adminbtn(){
-        work = "admin";
-
         displaySignInButtons();
 
     }
 
     public void verifyDriver(){
         displaySignInButtons();
-    }
-
-
-    public void confirmCode(){
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("drivers code");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String code = textCode.getEditText().getText().toString();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-
-                    codeObjects = ds.getValue(CodeObjects.class);
-                    Log.d("codekey", ds.getKey());
-
-                    Log.d("code", codeObjects.getCode());
-                    if(codeObjects.getCode().equals(code) && codeObjects.getStatus().equals("0")){
-                        codeObjects.setStatus("1");
-                        myRef.child(ds.getKey()).setValue(codeObjects);
-                       // displaySignInButtons();
-
-                        Intent driverIntent = new Intent(Login.this, RegisterDriver.class);
-                        driverIntent.putExtra("userId", "");
-                        startActivity(driverIntent);
-                        finish();
-                        break;
-
-                    }else {
-                        textCode.getEditText().setError("Invalid Code");
-                        textCode.getEditText().setFocusable(true);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void slider(ConstraintLayout constraintLayout){
@@ -342,40 +195,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-    public void getAssignedVehicle(){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("assigned vehicles");
-        FirebaseUser user = mAuth.getCurrentUser();
-        dRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                     assignVehicleData = ds.getValue(AssignVehicleData.class);
-                    Log.d("ds key", ds.getKey());
-                    if(assignVehicleData != null){
-                            driverId = assignVehicleData.getDriverId();
-                            stat = assignVehicleData.getStatus();
-                            Log.d("Assign vehicle", assignVehicleData.getDriverId());
-                        Log.d("driver ID", stat);
-
-
-                    }
-                    else {
-                        driverId = "";
-                        Log.d("driverId",driverId);
-                        Log.d("driverId","fuck off");
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 
 
 }

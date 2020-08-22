@@ -33,6 +33,12 @@ public class Drivers extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void DisabledDrivers(View view){
+        Intent intent = new Intent(this, ListServices.class);
+        intent.putExtra("choice","Deactivated Drivers");
+        startActivity(intent);
+    }
+
 
     public void backPress(View view){
         onBackPressed();

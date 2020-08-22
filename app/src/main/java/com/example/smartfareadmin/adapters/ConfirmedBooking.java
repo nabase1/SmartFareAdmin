@@ -64,8 +64,8 @@ public class ConfirmedBooking extends RecyclerView.Adapter<ConfirmedBooking.Book
                         Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
                             @Override
                             public int compare(Bookings o1, Bookings o2) {
-                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
-                                        Long.parseLong(o2.getDateTime().toString()));
+                                return Long.compare(Long.parseLong(o2.getDateTime().toString()),
+                                        Long.parseLong(o1.getDateTime().toString()));
                             }
                         });
 

@@ -60,8 +60,8 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
                         Collections.sort(driverBookingsArrayList, new Comparator<driverBooking>() {
                             @Override
                             public int compare(driverBooking o1, driverBooking o2) {
-                                return Long.compare(Long.parseLong(o1.getDateTime().toString()),
-                                        Long.parseLong(o2.getDateTime().toString()));
+                                return Long.compare(Long.parseLong(o2.getDateTime().toString()),
+                                        Long.parseLong(o1.getDateTime().toString()));
                             }
                         });
                     }

@@ -46,6 +46,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.smartfareadmin.activities.Constants.ONE;
+import static com.example.smartfareadmin.activities.Constants.TWO;
+
 public class RegisterDriver extends AppCompatActivity {
 
     @BindView(R.id.user_name_text)
@@ -82,7 +85,7 @@ public class RegisterDriver extends AppCompatActivity {
     VehicleData vehicleData;
     private static final int picture_code = 1;
     public static ArrayList<VehicleData> array;
-    String driverId, vehicleId, dEmail, dName;
+    String driverId;
     AssignVehicleData assignVehicleData;
 
     @Override
@@ -106,7 +109,7 @@ public class RegisterDriver extends AppCompatActivity {
         });
 
 
-        FirebaseUtils.openFirebaseUtils("drivers profile", this);
+        FirebaseUtils.openFirebaseUtils(getString(R.string.drivers_profile), this);
 
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
@@ -118,11 +121,6 @@ public class RegisterDriver extends AppCompatActivity {
 
        // populateSpinner(databaseReference);
 
-        Bundle bundle = getIntent().getExtras();
-        driverId = bundle.getString("userId");
-
-
-
 
         Intent intent = getIntent();
         DriverDeal dDeals = (DriverDeal) intent.getSerializableExtra("drivers");
@@ -131,29 +129,26 @@ public class RegisterDriver extends AppCompatActivity {
             dDeals = new DriverDeal();
         }
         this.driverDeal = dDeals;
+        driverId = driverDeal.getId();
+        status = driverDeal.getStatus();
 
         if(driverId.equals("")){
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
             name_text.getEditText().setText(user.getDisplayName());
-            phone_text.getEditText().setText(dDeals.getPhoneNumber());
             email_text.getEditText().setText(user.getEmail());
-            address_text.getEditText().setText(dDeals.getAddress());
             display_text.getEditText().setText(user.getPhoneNumber());
-            driverLicenseNum.getEditText().setText(dDeals.getDriverLicense());
-            licenseExpire.getEditText().setText(dDeals.getLicenseExpireDate());
-            showImage(dDeals.getImageUrl());
         }else {
 
             name_text.getEditText().setText(dDeals.getName());
-            phone_text.getEditText().setText(dDeals.getPhoneNumber());
             email_text.getEditText().setText(dDeals.getEmail());
-            address_text.getEditText().setText(dDeals.getAddress());
             display_text.getEditText().setText(dDeals.getDisplayName());
-            driverLicenseNum.getEditText().setText(dDeals.getDriverLicense());
-            licenseExpire.getEditText().setText(dDeals.getLicenseExpireDate());
-            showImage(dDeals.getImageUrl());
         }
+        phone_text.getEditText().setText(dDeals.getPhoneNumber());
+        address_text.getEditText().setText(dDeals.getAddress());
+        driverLicenseNum.getEditText().setText(dDeals.getDriverLicense());
+        licenseExpire.getEditText().setText(dDeals.getLicenseExpireDate());
+        showImage(dDeals.getImageUrl());
 
 
     }
@@ -166,7 +161,7 @@ public class RegisterDriver extends AppCompatActivity {
         MenuItem itemAdd = menu.findItem(R.id.action_add);
         itemAdd.setVisible(false);
 
-        if(driverId.equals("")){
+        if(driverId == null){
             MenuItem itemDelete = menu.findItem(R.id.action_delete);
             itemDelete.setVisible(false);
 
@@ -180,6 +175,7 @@ public class RegisterDriver extends AppCompatActivity {
 
             MenuItem itemDelete = menu.findItem(R.id.action_delete);
             itemDelete.setVisible(true);
+
         }
         return true;
 
@@ -195,12 +191,34 @@ public class RegisterDriver extends AppCompatActivity {
         }
 
         if(id == R.id.action_delete){
-            deleteDriver();
+            if(status.equals(ONE) || status.equals(TWO)){
+                Toast.makeText(this, "Driver is Online, Wait!", Toast.LENGTH_SHORT).show();
+            }else {
+                deleteDriver();
+            }
+
         }
 
         if(id == R.id.action_verify){
-            status = "0";
-            saveDriver();
+            if(status.equals(ONE) || status.equals(TWO)){
+                Toast.makeText(this, getString(R.string.warning_info), Toast.LENGTH_SHORT).show();
+            }else {
+                status = "0";
+                saveDriver();
+                Toast.makeText(this, R.string.verified, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        if(id == R.id.action_disable){
+            if(status.equals(ONE) || status.equals(TWO)){
+                Toast.makeText(this, getString(R.string.warning_info), Toast.LENGTH_SHORT).show();
+            }else {
+                status = "-2";
+                saveDriver();
+                Toast.makeText(this, R.string.diactivate, Toast.LENGTH_SHORT).show();
+            }
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -217,8 +235,11 @@ public class RegisterDriver extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == picture_code && resultCode == RESULT_OK){
-            Uri uri = data.getData();
-            Log.d("Uri", uri.toString());
+            Uri uri = null;
+            if(data != null){
+                 uri = data.getData();
+                Log.d("Uri", uri.toString());
+            }
 
             StorageReference sRef = FirebaseUtils.storageReference.child("drivers_pictures").child(uri.getLastPathSegment());
             sRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -285,38 +306,32 @@ public class RegisterDriver extends AppCompatActivity {
                 driverDeal.setLicenseExpireDate(licenseExpire.getEditText().getText().toString());
                 driverDeal.setStatus(status);
 
-                if(driverId.equals("")){
+                if(driverId == null){
                     driverId = user.getUid();
 
-                        if(driverDeal.getId() == null){
 
-                            Date c = Calendar.getInstance().getTime();
-                            System.out.println("Current time => " + c);
+                    if(driverDeal.getId() == null){
+                        driverDeal.setId(driverId);
+                        Date c = Calendar.getInstance().getTime();
+                        Log.d("Current time => ", c.toString());
 
-                            SimpleDateFormat df =  new SimpleDateFormat("dd-MMM-yyyy", Locale.UK);
-                            String formattedDate = df.format(c);
+                        SimpleDateFormat df =  new SimpleDateFormat("dd-MMM-yyyy", Locale.UK);
+                        String formattedDate = df.format(c);
 
-                            driverDeal.setRegistrationDate(formattedDate);
+                        driverDeal.setRegistrationDate(formattedDate);
+                        databaseReference.child(driverId).setValue(driverDeal);
 
-                            databaseReference.child(user.getUid()).push().setValue(driverDeal);
-                            Toast.makeText(this, "Profile Information Added, Thank You", Toast.LENGTH_SHORT).show();
-                            clearFields();
-                            firebaseAuth.signOut();
-                            Intent intent = new Intent(this, Login.class);
-                            startActivity(intent);
-                            finish();
-                        }else {
+                    }else {
 
-                            driverDeal.setRegistrationDate(driverDeal.getRegistrationDate());
-                            databaseReference.child(user.getUid()).child(driverDeal.getId()).setValue(driverDeal);
+                        //driverDeal.setRegistrationDate(driverDeal.getRegistrationDate());
+                        databaseReference.child(user.getUid()).setValue(driverDeal);
 
-                        }
+                    }
                 }
                 else{
-                    driverDeal.setRegistrationDate(driverDeal.getRegistrationDate());
-                    databaseReference.child(driverId).child(driverDeal.getId()).setValue(driverDeal);
-                    Toast.makeText(this, "Drivers Profile Information Updated!", Toast.LENGTH_SHORT).show();
-                    backToList();
+                        databaseReference.child(driverId).setValue(driverDeal);
+                        //databaseReference.child(driverId).child(getString(R.string.status)).setValue(status);
+                        onBackPressed();
                 }
 
             }
@@ -327,12 +342,6 @@ public class RegisterDriver extends AppCompatActivity {
             }
     }
 
-    public void backToList(){
-        Intent intent = new Intent(this, ListServices.class);
-        intent.putExtra("choice","Pending Drivers");
-        startActivity(intent);
-        finish();
-    }
 
     public void deleteDriver(){
         if(driverDeal.getId() == null){
@@ -341,82 +350,9 @@ public class RegisterDriver extends AppCompatActivity {
         else {
             driverDeal.setStatus("-1");
             databaseReference.child(driverId).removeValue();
-            Toast.makeText(this, "Driver Deleted!", Toast.LENGTH_SHORT).show();
-            backToList();
+            Toast.makeText(this, "Driver Account Deleted!", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
-    }
-
-    public void clearFields(){
-        name_text.getEditText().setText("");
-        phone_text.getEditText().setText("");
-        email_text.getEditText().setText("");
-        address_text.getEditText().setText("");
-        display_text.getEditText().setText("");
-        driverLicenseNum.getEditText().setText("");
-        licenseExpire.getEditText().setText("");
-    }
-
-    //method to fetch data from firebase to populate  spinner
-    public void populateSpinner(DatabaseReference databaseReference){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("vehicles details");
-
-        dRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                final List<String> titleList = new ArrayList<String>();
-                titleList.add("Select Vehicle");
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    VehicleData vDeals = dataSnapshot1.getValue(VehicleData.class);
-                    if(vDeals.getStatus().equals("0")){
-                        vDeals.setId(dataSnapshot1.getKey());
-                        String vehicle = vDeals.getRegistrationNumber();
-                        array.add(vDeals);
-                        titleList.add(vehicle);
-                    }
-                }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(RegisterDriver.this, android.R.layout.simple_spinner_item, titleList);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-               // vehicleNumber.setAdapter(arrayAdapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RegisterDriver.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
-    public void updateVehicle(){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("vehicles details");
-        if(vehicleData.getId() != null){
-            dRef.child(vehicleData.getId()).setValue(vehicleData);
-            saveAssignVehicle();
-        }
-        else {
-            Toast.makeText(this, "Vehicle is null!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void saveAssignVehicle(){
-
-        Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
-
-        SimpleDateFormat df =  new SimpleDateFormat("dd-MMM-yyyy", Locale.UK);
-        String formattedDate = df.format(c);
-
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("assigned vehicles");
-        assignVehicleData.setDriverId(driverId);
-        assignVehicleData.setVehicleId(vehicleId);
-        assignVehicleData.setStatus("1");
-        assignVehicleData.setcDate(formattedDate);
-
-        dRef.push().setValue(assignVehicleData);
-        Log.d("assignVehicle","ok saved");
     }
 
 

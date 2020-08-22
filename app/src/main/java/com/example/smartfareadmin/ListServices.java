@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.example.smartfareadmin.adapters.CompletedTripAdapter;
 import com.example.smartfareadmin.adapters.ConfirmedBooking;
 import com.example.smartfareadmin.adapters.Confirmed_drivers;
 import com.example.smartfareadmin.adapters.DealAdapter;
+import com.example.smartfareadmin.adapters.DisabledDrivers;
 import com.example.smartfareadmin.adapters.DriversAdapter;
 import com.example.smartfareadmin.adapters.DriversOnline;
 import com.example.smartfareadmin.adapters.MeterCompletedTripAdapter;
@@ -35,6 +37,9 @@ public class ListServices extends AppCompatActivity {
     private boolean stopThread = false;
     @BindView(R.id.textViewHead)
     TextView textViewHead;
+
+    @BindView(R.id.progressBar2)
+    ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mDealLinearManager;
     private PendingBookingAdapter mPendingBookingAdapter;
@@ -48,6 +53,7 @@ public class ListServices extends AppCompatActivity {
     private MeterCompletedTripAdapter mMeterCompletedTripAdapter;
     private DriversPersonalOngoingTripAdapter mDriversPersonalOngoingTripAdapter;
     private DriversOnline mDriversOnline;
+    private DisabledDrivers mDisabledDrivers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,7 @@ public class ListServices extends AppCompatActivity {
             }
         });
 
+        mProgressBar.setVisibility(View.VISIBLE);
         Bundle bundle = getIntent().getExtras();
         choice = bundle.getString("choice");
 
@@ -158,8 +165,13 @@ public class ListServices extends AppCompatActivity {
             mConfirmedDrivers = new Confirmed_drivers();
             mRecyclerView.setAdapter(mConfirmedDrivers);
             mRecyclerView.setLayoutManager(mDealLinearManager);
+        }
 
-
+        if(option.equals("Deactivated Drivers")){
+            FirebaseUtils.openFirebaseUtils("drivers profile", this);
+            mDisabledDrivers = new DisabledDrivers();
+            mRecyclerView.setAdapter(mDisabledDrivers);
+            mRecyclerView.setLayoutManager(mDealLinearManager);
         }
 
         if(option.equals("Vehicles")){
@@ -194,6 +206,9 @@ public class ListServices extends AppCompatActivity {
             mRecyclerView.setAdapter(mDriversOnline);
             mRecyclerView.setLayoutManager(mDealLinearManager);
         }
+
+        mProgressBar.setVisibility(View.GONE);
+
     }
 
     public void initialize(){
@@ -232,6 +247,9 @@ public class ListServices extends AppCompatActivity {
 
         if(choice.equals("Pending Drivers")){
             mDriversAdapter.notifyDataSetChanged();
+        }
+        if(choice.equals("Deactivated Drivers")){
+            mDisabledDrivers.notifyDataSetChanged();
         }
 
         if(choice.equals("Confirmed Drivers")){
@@ -272,7 +290,7 @@ public class ListServices extends AppCompatActivity {
                 || choice.equals("Cancelled Bookings") || choice.equals("Completed Trips")
                 || choice.equals("Confirmed Drivers")  || choice.equals("Pending Drivers")
                 || choice.equals("Meter Trips") || choice.equals("Ongoing Meter Trips")
-                || choice.equals("Drivers Online")){
+                || choice.equals("Drivers Online") || choice.equals("Deactivated Drivers")){
             MenuItem mainMenu = menu.findItem(R.id.main_menu);
             mainMenu.setVisible(false);
 

@@ -149,29 +149,29 @@ public class ChooseVehicle extends AppCompatActivity implements AdapterView.OnIt
 
 
 
-    public void getDriverInfo(){
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    if(dataSnapshot1.getKey().equals(driverId)){
-                        for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
-
-                            driverDeal = dataSnapshot2.getValue(DriverDeal.class);
-                            driverDeal.setId(dataSnapshot2.getKey());
-
-                        }
-
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    public void getDriverInfo(){
+//        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
+//        mRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+//                    if(dataSnapshot1.getKey().equals(driverId)){
+//                        for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
+//
+//                            driverDeal = dataSnapshot2.getValue(DriverDeal.class);
+//                            driverDeal.setId(dataSnapshot2.getKey());
+//
+//                        }
+//
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     public void updateVehicle(){
         DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("vehicles details");
@@ -196,10 +196,7 @@ public class ChooseVehicle extends AppCompatActivity implements AdapterView.OnIt
     public void updateDriver(){
         driverDeal.setStatus("1");
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
-        mRef.child(driverId).child(driverDeal.getId()).setValue(driverDeal);
-
-
-
+        mRef.child(driverId).setValue(driverDeal);
 
     }
 
@@ -217,7 +214,9 @@ public class ChooseVehicle extends AppCompatActivity implements AdapterView.OnIt
         assignVehicleData.setStatus("1");
         assignVehicleData.setcDate(formattedDate);
 
-        dRef.push().setValue(assignVehicleData);
+        dRef.child(driverId).push().setValue(assignVehicleData);
+
+        updateDriver();
 
         Intent intent = new Intent(this, DriverMap.class);
         intent.putExtra(Constants.DriverMap, "nonRoute");

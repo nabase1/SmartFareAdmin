@@ -81,14 +81,40 @@
     <string name="service_type">Service Type</string>
     <string name="total_fare">Total Fare :</string>
     <string name="driver_info">Driver Info</string>
-    <string name="email">Email :</string>
-    <string name="name">Name :</string>
+    <string name="email_client">Email :</string>
+    <string name="name_driver">Name :</string>
     <string name="license">License :</string>
-    <string name="address">Address :</string>
-    <string name="vehicle">Vehicle:</string>
+    <string name="address_name">Address :</string>
+    <string name="vehicle_name">Vehicle:</string>
     <string name="location">Location:</string>
     <string name="todo">TODO</string>
     <string name="date">Date :</string>
+    <string name="disable">Disable Account</string>
+    <string name="deactivated_drivers">Deactivated Drivers</string>
+
+    <!--    Driver registration fields-->
+    <string name="drivers_profile">drivers profile</string>
+    <string name="name">name</string>
+    <string name="displayName">displayName</string>
+    <string name="email">email</string>
+    <string name="phoneNumber">phoneNumber</string>
+    <string name="address">address</string>
+    <string name="driverLicense">driverLicense</string>
+    <string name="licenseExpireDate">licenseExpireDate</string>
+    <string name="vehicle">vehicle</string>
+    <string name="status">status</string>
+    <string name="registrationDate">registrationDate</string>
+
+    <!--        assign Vehicle fields-->
+
+    <string name="assigned_vehicles">assigned vehicles</string>
+    <string name="driverId">driverId</string>
+    <string name="vehicleIde">vehicleId</string>
+    <string name="cDate">cDate</string>
+    <string name="warning_info">Driver is Online, Please Wait!</string>
+    <string name="verified">Account Updated!</string>
+    <string name="diactivate">Account Deactivated</string>
+
 
 </resources>
 

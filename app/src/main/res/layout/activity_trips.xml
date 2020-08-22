@@ -89,7 +89,7 @@
                             android:id="@+id/btn_completed_trips"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/ic_airport_shuttle_black_24dp"
+                            android:background="@drawable/completed_trip_img"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:onClick="CompletedTrips"/>
@@ -123,7 +123,7 @@
                             android:id="@+id/btn_ongoing_drivers_trip"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/ic_local_taxi_black_24dp"
+                            android:background="@drawable/ongoing_trips"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:onClick="DriversOngoingTrip"/>
@@ -157,7 +157,7 @@
                             android:id="@+id/btn_completed_drivers_trips"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/mtrips"
+                            android:background="@drawable/meter_trips"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:onClick="DriversCompletedTrip"/>

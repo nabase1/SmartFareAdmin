@@ -7,16 +7,20 @@ public class TripDetailsData {
     private String status;
     private String totalFare;
     private String bookingId;
+    private String vehicleId;
+    private String date;
 
     public TripDetailsData() {}
 
-    public TripDetailsData(String driverId, String userId, String status, String totalCharges, String bookingId) {
+    public TripDetailsData(String driverId, String userId, String status, String totalCharges, String bookingId, String vehicleId, String date) {
         this.id = id;
         this.driverId = driverId;
         this.userId = userId;
         this.status = status;
         this.totalFare = totalCharges;
         this.bookingId = bookingId;
+        this.vehicleId = vehicleId;
+        this.date = date;
     }
 
     public String getId() {
@@ -65,5 +69,21 @@ public class TripDetailsData {
 
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

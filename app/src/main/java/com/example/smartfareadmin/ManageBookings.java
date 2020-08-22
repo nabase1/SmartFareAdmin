@@ -305,37 +305,29 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
     }
 
-//    public void backToList(){
-//        Intent intent = new Intent(this, ListServices.class);
-//        intent.putExtra("choice","Pending Request");
-//        startActivity(intent);
-//        finish();
-//    }
 
     //method to fetch data from firebase to populate  spinner
     public void populateSpinner(DatabaseReference databaseReference){
-        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
+        DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child(getString(R.string.drivers_profile));
 
-        dRef.addValueEventListener(new ValueEventListener() {
+        dRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final List<String> titleList = new ArrayList<String>();
                 titleList.add("Select Driver");
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    for(DataSnapshot ds: dataSnapshot1.getChildren()){
-                        DriverDeal dDeals = ds.getValue(DriverDeal.class);
-                        if(dDeals.getStatus().equals("1")){
-                            String driverId = dataSnapshot1.getKey();
-                            driverIdArray.add(driverId);
-                            dDeals.setId(ds.getKey());
-                            String driverName = dDeals.getDisplayName();
-                            array.add(dDeals);
-                            titleList.add(driverName);
-                        }
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                    DriverDeal dDeals = dataSnapshot1.getValue(DriverDeal.class);
+                    if(dDeals.getStatus().equals("1")) {
+                        String driverId = dataSnapshot1.getKey();
+                        driverIdArray.add(driverId);
+                        dDeals.setId(dataSnapshot1.getKey());
+                        String driverName = dDeals.getDisplayName();
+                        array.add(dDeals);
+                        titleList.add(driverName);
                     }
 
                 }
+
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ManageBookings.this, android.R.layout.simple_spinner_item, titleList);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerAssign.setAdapter(arrayAdapter);
@@ -343,8 +335,8 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ManageBookings.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ManageBookings.this,error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -376,13 +368,24 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
 
     public void saveTripDetails(){
 
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        int rMonth = month + 1;
+
+        String date = day + " / " + rMonth + " / " + year;
+
         tripDetailsData.setDriverId(driverId);
         tripDetailsData.setUserId(userBookingId);
         tripDetailsData.setStatus("1");
         tripDetailsData.setBookingId(bookingid);
+        tripDetailsData.setDate(date);
+
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("trip details");
-        mRef.push().setValue(tripDetailsData);
+        mRef.child(driverId).push().setValue(tripDetailsData);
 
         if (notify) {
 
@@ -411,7 +414,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
                             .enqueue(new Callback<Response>() {
                                 @Override
                                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    Toast.makeText(ManageBookings.this, response.message(), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(ManageBookings.this, response.message(), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -446,7 +449,7 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
                             .enqueue(new Callback<Response>() {
                                 @Override
                                 public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    Toast.makeText(ManageBookings.this, response.message(), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(ManageBookings.this, response.message(), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -466,10 +469,10 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void updateDriverDetails(){
-        dDeal.setStatus("2");
+        String status = "2";
         if(dDeal.getId() != null){
-            DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("drivers profile");
-            dRef.child(driverId).child(dDeal.getId()).setValue(dDeal);
+            DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child(getString(R.string.drivers_profile));
+            dRef.child(driverId).child(getString(R.string.status)).setValue(status);
             saveTripDetails();
 
         }else {

@@ -59,6 +59,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -452,9 +453,9 @@ public class DriverMap extends AppCompatActivity implements OnMapReadyCallback, 
        // disconnectUser();
         mAuth.signOut();
         getAssignedVehicle();
-        Intent userIntent = new Intent(DriverMap.this, Login.class);
-        startActivity(userIntent);
-        finish();
+//        Intent userIntent = new Intent(DriverMap.this, Login.class);
+//        startActivity(userIntent);
+//        finish();
     }
 
     private void disconnectUser(){
@@ -508,9 +509,7 @@ public class DriverMap extends AppCompatActivity implements OnMapReadyCallback, 
                             getVehicleInfo();
                         }
                     }
-                    else {
 
-                    }
                 }
             }
 
@@ -550,8 +549,8 @@ public class DriverMap extends AppCompatActivity implements OnMapReadyCallback, 
     public void signOutVehicle(){
         if(assignVehicleData.getStatus().equals("1")){
             assignVehicleData.setStatus("0");
-            DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child("assigned vehicles");
-            dRef.child(assignVehicleData.getId()).setValue(assignVehicleData);
+            DatabaseReference dRef = FirebaseDatabase.getInstance().getReference().child(getString(R.string.assigned_vehicles));
+            dRef.child(mAuth.getCurrentUser().getUid()).child(getString(R.string.status)).setValue(assignVehicleData);
             updateVehicle();
         }
 
