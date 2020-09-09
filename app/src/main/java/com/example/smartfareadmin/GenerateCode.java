@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.smartfareadmin.dataObjects.CodeObjects;
@@ -33,6 +34,9 @@ public class GenerateCode extends AppCompatActivity {
     @BindView(R.id.buttonGenerate)
     Button btnGenerete;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     CodeObjects codeObjects;
@@ -56,6 +60,8 @@ public class GenerateCode extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import com.example.smartfareadmin.dataObjects.SevicesDeal;
 import com.example.smartfareadmin.utils.FirebaseUtils;
@@ -79,6 +80,9 @@ public class AddService extends AppCompatActivity {
     @BindView(R.id.transition_container)
     ViewGroup tContainer;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
 
 
     @Override
@@ -91,6 +95,7 @@ public class AddService extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setTitle("SmartCab Gh");
 
+        mSearchView.setVisibility(View.INVISIBLE);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

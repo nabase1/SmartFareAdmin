@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,9 @@ public class FareSwitch extends AppCompatActivity {
    @BindView(R.id.textStatus)
     TextView textStatus;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public class FareSwitch extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

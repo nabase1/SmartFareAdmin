@@ -33,6 +33,14 @@
             app:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             tools:layout_editor_absoluteY="0dp">
 
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/SearchViewTheme">
+
+            </androidx.appcompat.widget.SearchView>
+
 
         </androidx.appcompat.widget.Toolbar>
 

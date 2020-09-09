@@ -50,12 +50,9 @@
         <activity
             android:name=".fragments.AdminMaps"
             android:label="@string/title_activity_admin_maps" />
-        <activity android:name=".ChooseVehicle" />
         <activity android:name=".TripDetails" />
-        <activity android:name=".DriverConfirm" />
         <activity android:name=".VehicleRegistration" />
         <activity android:name=".GenerateCode" />
-        <activity android:name=".UserProfile" />
         <activity android:name=".ManageBookings" />
         <activity android:name=".FareSwitch" />
         <activity android:name=".ListServices" />
@@ -65,14 +62,7 @@
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Services" />
-        <activity
-            android:name=".fragments.DriverMap"
-            android:label="@string/title_activity_driver_map" />
         <activity android:name=".activities.Login" />
-        <activity
-            android:name=".fragments.MapsActivity"
-            android:label="@string/title_activity_maps" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

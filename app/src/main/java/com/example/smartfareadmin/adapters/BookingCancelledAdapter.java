@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,9 +31,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancelledAdapter.BookingViewHolder> {
+public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancelledAdapter.BookingViewHolder> implements Filterable {
 
-    ArrayList<Bookings> bookingsArrayList,bookingidArrayList;
+    ArrayList<Bookings> bookingsArrayList, mFilteredList, mBookings;
     //ArrayList<String> bookingidArrayList;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -41,9 +43,10 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
     public BookingCancelledAdapter(){
         bookings = new Bookings();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
-        bookingidArrayList = new ArrayList<Bookings>();
+        mBookings = new ArrayList<Bookings>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
+        mFilteredList = new ArrayList<Bookings>();
 
         childEventListener = new ChildEventListener() {
             @Override
@@ -54,7 +57,6 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
                     if((bookings.getStatus()).equals("-1")){
                         bookings.setId(ds.getKey());
                         bookingsArrayList.add(bookings);
-                        bookingidArrayList.add(bookings);
 
                         Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
                             @Override
@@ -63,7 +65,7 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
                                         Long.parseLong(o1.getDateTime().toString()));
                             }
                         });
-
+                mBookings = bookingsArrayList;
 //                        Collections.sort(bookingidArrayList, new Comparator<Bookings>() {
 //                            @Override
 //                            public int compare(Bookings o1, Bookings o2) {
@@ -129,6 +131,54 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
         return bookingsArrayList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<Bookings> filter = new ArrayList<Bookings>();
+            if(searchString.isEmpty()){
+                mFilteredList = mBookings;
+            }else {
+                for (Bookings booking : bookingsArrayList){
+                    if(booking.getName().toLowerCase().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getServiceType().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getPick_up_date().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getPick_up_time().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            bookingsArrayList = (ArrayList<Bookings>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
+
     public class BookingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textName,textServiceName,textPickDate, textPickTime;
 
@@ -163,7 +213,6 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
             Bookings getDeals = bookingsArrayList.get(position);
             Intent intent = new Intent(v.getContext(), CompletedTripDetails.class);
             intent.putExtra("Completed Bookings", getDeals);
-           // intent.putExtra("bookingId", bookingidArrayList.get(position));
             intent.putExtra("completed", "0");
            // Log.d("bid",bookingidArrayList.get(position));
             v.getContext().startActivity(intent);

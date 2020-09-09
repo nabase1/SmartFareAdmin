@@ -4,6 +4,7 @@ package com.example.smartfareadmin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -108,6 +109,9 @@ public class TripDetails extends AppCompatActivity {
     @BindView(R.id.txtVcolor)
     TextView vehicleColor;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +123,8 @@ public class TripDetails extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import com.example.smartfareadmin.dataObjects.Bookings;
 import com.example.smartfareadmin.dataObjects.DriverDeal;
@@ -102,6 +103,9 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
     @BindView(R.id.spinnerAssign)
     Spinner spinnerAssign;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +119,8 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

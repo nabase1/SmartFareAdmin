@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,15 +33,18 @@ import com.example.smartfareadmin.utils.FirebaseUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListServices extends AppCompatActivity {
+public class ListServices extends AppCompatActivity{
 
     private String choice;
-    private boolean stopThread = false;
     @BindView(R.id.textViewHead)
     TextView textViewHead;
 
     @BindView(R.id.progressBar2)
     ProgressBar mProgressBar;
+
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mDealLinearManager;
     private PendingBookingAdapter mPendingBookingAdapter;
@@ -61,6 +66,7 @@ public class ListServices extends AppCompatActivity {
         setContentView(R.layout.activity_list_services);
         ButterKnife.bind(this);
 
+
         Toolbar toolbar = findViewById(R.id.mtoolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setTitle("SmartCab Gh");
@@ -78,36 +84,14 @@ public class ListServices extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         choice = bundle.getString("choice");
 
+        initializeSearch(choice);
         initialize();
 
         loadListView(choice);
-       Thread thread=new Thread(){
 
-            @Override
-            public void run(){
-
-                while(!stopThread){
-
-                    try {
-                        Thread.sleep(1000);  //1000ms = 1 sec
-
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
 
     }
+
 
     public void loadListView(String option){
 
@@ -330,4 +314,121 @@ public class ListServices extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    //listing to search view
+
+    public void initializeSearch(String option){
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (option.equals("Pending Request")) {
+                    mPendingBookingAdapter = new PendingBookingAdapter();
+                }
+
+                if (option.equals("services")) {
+                    //filter recyclerView when query is submitted
+                   mDealAdapter.filterList.filter(query);
+                }
+
+                if (option.equals("Confirmed Request")) {
+                    mConfirmedBooking = new ConfirmedBooking();
+                }
+
+                if (option.equals("Cancelled Bookings")) {
+                    //filter recyclerView when query is submitted
+                    mBookingCancelledAdapter.filterList.filter(query);
+                }
+
+                if (option.equals("Completed Trips")) {
+                    mCompletedTripAdapter = new CompletedTripAdapter();
+                }
+
+                if (option.equals("Pending Drivers")) {
+                    mDriversAdapter = new DriversAdapter();
+                }
+
+                if (option.equals("Confirmed Drivers")) {
+                    mConfirmedDrivers = new Confirmed_drivers();
+                }
+
+                if (option.equals("Deactivated Drivers")) {
+                    mDisabledDrivers = new DisabledDrivers();
+                }
+
+                if (option.equals("Vehicles")) {
+                    mVehicleAdapter = new VehicleAdapter();
+
+                }
+
+                if (option.equals("Meter Trips")) {
+                    //filter recyclerView when query is submitted
+                    mMeterCompletedTripAdapter.filterList.filter(query);
+                }
+
+                if (option.equals("Ongoing Meter Trips")) {
+
+                }
+
+                return  false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if (option.equals("Pending Request")) {
+                    mPendingBookingAdapter = new PendingBookingAdapter();
+                }
+
+                if (option.equals("services")) {
+                    //filter recylerView when query is changed
+                    mDealAdapter.filterList.filter(newText);
+                }
+
+                if (option.equals("Confirmed Request")) {
+                    mConfirmedBooking = new ConfirmedBooking();
+                }
+
+                if (option.equals("Cancelled Bookings")) {
+                    //filter recylerView when query is changed
+                    mBookingCancelledAdapter.filterList.filter(newText);
+                }
+
+                if (option.equals("Completed Trips")) {
+                    mCompletedTripAdapter = new CompletedTripAdapter();
+                }
+
+                if (option.equals("Pending Drivers")) {
+                    mDriversAdapter = new DriversAdapter();
+                }
+
+                if (option.equals("Confirmed Drivers")) {
+                    mConfirmedDrivers = new Confirmed_drivers();
+                }
+
+                if (option.equals("Deactivated Drivers")) {
+                    mDisabledDrivers = new DisabledDrivers();
+                }
+
+                if (option.equals("Vehicles")) {
+                    mVehicleAdapter = new VehicleAdapter();
+
+                }
+
+                if (option.equals("Meter Trips")) {
+                    //filter recylerView when query is changed
+                    mMeterCompletedTripAdapter.filterList.filter(newText);
+                }
+
+                if (option.equals("Ongoing Meter Trips")) {
+
+                }
+
+
+                return false;
+            }
+        });
+    }
+
 }

@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartfareadmin.AddService;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.dataObjects.SevicesDeal;
+import com.example.smartfareadmin.dataObjects.driverBooking;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,18 +30,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder>{
+public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder> implements Filterable {
 
     ArrayList<SevicesDeal> array;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
     private ImageView imageView;
+    ArrayList<SevicesDeal> mFilteredList;
+    ArrayList<SevicesDeal> mDeals;
 
     public DealAdapter(){
 
         array = FirebaseUtils.arrayList;
-
+        mFilteredList = new ArrayList<SevicesDeal>();
+        mDeals = new ArrayList<SevicesDeal>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
 
@@ -49,6 +55,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
                 SevicesDeal sevicesDeal = dataSnapshot.getValue(SevicesDeal.class);
                 sevicesDeal.setId(dataSnapshot.getKey());
                 array.add(sevicesDeal);
+                mDeals = array;
                 notifyItemChanged(array.size()-1);
             }
 
@@ -96,6 +103,46 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         return array.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<SevicesDeal> filter = new ArrayList<SevicesDeal>();
+            if(searchString.isEmpty()){
+                mFilteredList = mDeals;
+            }else {
+                for (SevicesDeal deal : array){
+                    if(deal.getName().toLowerCase().trim().contains(searchString)){
+                        filter.add(deal);
+                    }
+                    else if(deal.getDescription().toLowerCase().trim().contains(searchString)){
+                        filter.add(deal);
+                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            array = (ArrayList<SevicesDeal>) results.values;
+            notifyDataSetChanged();
+
+        }
+    };
 
 
     public class DealViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

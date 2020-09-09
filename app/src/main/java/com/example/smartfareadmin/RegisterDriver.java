@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.smartfareadmin.activities.Login;
@@ -74,6 +75,10 @@ public class RegisterDriver extends AppCompatActivity {
 
     @BindView(R.id.img_driver)
     ImageView img_driver;
+
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     String status;
 
 
@@ -100,6 +105,8 @@ public class RegisterDriver extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

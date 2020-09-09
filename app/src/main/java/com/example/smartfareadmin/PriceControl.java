@@ -2,6 +2,7 @@ package com.example.smartfareadmin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -30,6 +31,9 @@ public class PriceControl extends AppCompatActivity {
     @BindView(R.id.waiting_fare)
     TextInputLayout waiting_fare;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,8 @@ public class PriceControl extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

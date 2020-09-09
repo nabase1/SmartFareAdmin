@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import com.example.smartfareadmin.dataObjects.VehicleData;
 import com.example.smartfareadmin.utils.FirebaseUtils;
@@ -103,6 +104,9 @@ public class VehicleRegistration extends AppCompatActivity {
     @BindView(R.id.img_vehicle)
     ImageView img_vehicle;
 
+    @BindView(R.id.search_item)
+    SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +118,8 @@ public class VehicleRegistration extends AppCompatActivity {
         toolbar.setTitle("SmartCab Gh");
 
         setSupportActionBar(toolbar);
+
+        mSearchView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
