@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,20 +26,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DisabledDrivers extends RecyclerView.Adapter<DisabledDrivers.DriverViewHolder> {
+public class DisabledDrivers extends RecyclerView.Adapter<DisabledDrivers.DriverViewHolder> implements Filterable {
 
-    ArrayList<DriverDeal> driverDealArrayList;
-    ArrayList<String> userIdArray;
+    ArrayList<DriverDeal> driverDealArrayList,mFilteredList,mDriverDeals;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ValueEventListener mValueEventListener;
     DriverDeal driverDeal;
-    public String userId;
 
     public DisabledDrivers(){
 
         driverDealArrayList = FirebaseUtils.driverDealArrayList;
-        userIdArray = new ArrayList<String>();
+        mFilteredList = new ArrayList<DriverDeal>();
+        mDriverDeals = new ArrayList<DriverDeal>();
         driverDeal = new DriverDeal();
          firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
@@ -54,6 +55,7 @@ public class DisabledDrivers extends RecyclerView.Adapter<DisabledDrivers.Driver
                         driverDealArrayList.add(driverDeal);
 
                         Collections.reverse(driverDealArrayList);
+                        mDriverDeals = driverDealArrayList;
                     }
                 }
 
@@ -92,6 +94,46 @@ public class DisabledDrivers extends RecyclerView.Adapter<DisabledDrivers.Driver
     public int getItemCount() {
         return driverDealArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<DriverDeal> filter = new ArrayList<DriverDeal>();
+            if(searchString.isEmpty()){
+                mFilteredList = mDriverDeals;
+            }else {
+                for (DriverDeal driverDeal : mDriverDeals){
+                    if(driverDeal.getDisplayName().toLowerCase().trim().contains(searchString) ||
+                            driverDeal.getName().toLowerCase().contains(searchString) ||
+                            driverDeal.getDriverLicense().toLowerCase().contains(searchString)){
+                        filter.add(driverDeal);
+                    }
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            driverDealArrayList = (ArrayList<DriverDeal>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
 
     public class DriverViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

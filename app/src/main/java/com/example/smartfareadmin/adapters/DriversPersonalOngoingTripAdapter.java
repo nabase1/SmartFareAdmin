@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,15 +31,17 @@ import java.util.Comparator;
 import java.util.Date;
 
 
-public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<DriversPersonalOngoingTripAdapter.BookingViewHolder> {
+public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<DriversPersonalOngoingTripAdapter.BookingViewHolder> implements Filterable {
 
-    ArrayList<driverBooking> driverBookingsArrayList;
+    ArrayList<driverBooking> driverBookingsArrayList,mFilteredList,mBookings;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
     driverBooking driverBooking;
 
     public DriversPersonalOngoingTripAdapter(){
+        driverBooking = new driverBooking();
+        driverBookingsArrayList = FirebaseUtils.driverBookingsArrayList;
         driverBooking = new driverBooking();
         driverBookingsArrayList = FirebaseUtils.driverBookingsArrayList;
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
@@ -61,6 +65,8 @@ public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<Driv
                                         Long.parseLong(o1.getDateTime().toString()));
                             }
                         });
+
+                        mBookings = driverBookingsArrayList;
 
                        // Collections.reverse(driverBookingsArrayList);
                     }
@@ -117,6 +123,48 @@ public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<Driv
     public int getItemCount() {
         return driverBookingsArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<driverBooking> filter = new ArrayList<driverBooking>();
+            if(searchString.isEmpty()){
+                mFilteredList = mBookings;
+            }else {
+                for (driverBooking booking : mBookings){
+                    if(booking.getClientName().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getDriverName().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            driverBookingsArrayList = (ArrayList<driverBooking>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
     public class BookingViewHolder extends RecyclerView.ViewHolder {
         TextView textName, textPhone, textFrom,textTo, cname,textAmount,textDate;

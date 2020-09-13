@@ -118,7 +118,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             if(searchString.isEmpty()){
                 mFilteredList = mDeals;
             }else {
-                for (SevicesDeal deal : array){
+                for (SevicesDeal deal : mDeals){
                     if(deal.getName().toLowerCase().trim().contains(searchString)){
                         filter.add(deal);
                     }

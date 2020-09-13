@@ -44,9 +44,10 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
         bookings = new Bookings();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
         mBookings = new ArrayList<Bookings>();
+        mFilteredList = new ArrayList<Bookings>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
-        mFilteredList = new ArrayList<Bookings>();
+
 
         childEventListener = new ChildEventListener() {
             @Override
@@ -146,7 +147,7 @@ public class BookingCancelledAdapter extends RecyclerView.Adapter<BookingCancell
             if(searchString.isEmpty()){
                 mFilteredList = mBookings;
             }else {
-                for (Bookings booking : bookingsArrayList){
+                for (Bookings booking : mBookings){
                     if(booking.getName().toLowerCase().contains(searchString)){
                         filter.add(booking);
                     }

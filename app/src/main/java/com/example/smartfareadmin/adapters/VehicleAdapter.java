@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.VehicleRegistration;
+import com.example.smartfareadmin.dataObjects.Bookings;
 import com.example.smartfareadmin.dataObjects.VehicleData;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.ChildEventListener;
@@ -24,17 +27,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleViewHolder> {
+public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleViewHolder> implements Filterable {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
-    ArrayList<VehicleData> vehicleDataArrayList;
+    ArrayList<VehicleData> vehicleDataArrayList,mFilteredList,mVehicleData;
 
 
     public VehicleAdapter(){
 
         vehicleDataArrayList = FirebaseUtils.vehicleDataArrayList;
+        mFilteredList = new ArrayList<VehicleData>();
+        mVehicleData = new ArrayList<VehicleData>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
 
@@ -47,6 +52,8 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
                 vehicleDataArrayList.add(vehicleData);
                 Log.d("vehicle Object", vehicleData.getEngineType());
                 Collections.reverse(vehicleDataArrayList);
+
+                mVehicleData = vehicleDataArrayList;
 
                 notifyItemChanged(vehicleDataArrayList.size()-1);
             }
@@ -99,6 +106,62 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
     public int getItemCount() {
         return vehicleDataArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<VehicleData> filter = new ArrayList<VehicleData>();
+            if(searchString.isEmpty()){
+                mFilteredList = mVehicleData;
+            }else {
+                for (VehicleData vehicleData : mVehicleData){
+                    if(vehicleData.getRegistrationNumber().toLowerCase().contains(searchString) ||
+                            vehicleData.getChassisNumber().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getMakeModel().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getFuelType().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getEngineType().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getCurrentOwnership().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getEngineNumber().toLowerCase().trim().contains(searchString) ||
+                            vehicleData.getExteriorColor().toLowerCase().trim().contains(searchString)){
+
+                        filter.add(vehicleData);
+                    }
+//                    else if(vehicleData.getChassisNumber().toLowerCase().trim().contains(searchString)){
+//                        filter.add(vehicleData);
+//                    }
+//                    else if(vehicleData.getMakeModel().toLowerCase().trim().contains(searchString)){
+//                        filter.add(vehicleData);
+//                    }
+//                    else if(vehicleData.getFuelType().toLowerCase().trim().contains(searchString)){
+//                        filter.add(vehicleData);
+//                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            vehicleDataArrayList = (ArrayList<VehicleData>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
     public class VehicleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView regNum, engType, insPolicy,manufDate,ownership;

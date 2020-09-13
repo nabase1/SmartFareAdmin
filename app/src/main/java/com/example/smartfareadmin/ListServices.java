@@ -324,7 +324,7 @@ public class ListServices extends AppCompatActivity{
             public boolean onQueryTextSubmit(String query) {
 
                 if (option.equals("Pending Request")) {
-                    mPendingBookingAdapter = new PendingBookingAdapter();
+                    mPendingBookingAdapter.filterList.filter(query);
                 }
 
                 if (option.equals("services")) {
@@ -333,7 +333,7 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Confirmed Request")) {
-                    mConfirmedBooking = new ConfirmedBooking();
+                    mConfirmedBooking.filterList.filter(query);
                 }
 
                 if (option.equals("Cancelled Bookings")) {
@@ -342,23 +342,23 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Completed Trips")) {
-                    mCompletedTripAdapter = new CompletedTripAdapter();
+                    mCompletedTripAdapter.filterList.filter(query);
                 }
 
                 if (option.equals("Pending Drivers")) {
-                    mDriversAdapter = new DriversAdapter();
+                    mDriversAdapter.filterList.filter(query);
                 }
 
                 if (option.equals("Confirmed Drivers")) {
-                    mConfirmedDrivers = new Confirmed_drivers();
+                    mConfirmedDrivers.filterList.filter(query);
                 }
 
                 if (option.equals("Deactivated Drivers")) {
-                    mDisabledDrivers = new DisabledDrivers();
+                    mDisabledDrivers.filterList.filter(query);
                 }
 
                 if (option.equals("Vehicles")) {
-                    mVehicleAdapter = new VehicleAdapter();
+                    mVehicleAdapter.filterList.filter(query);
 
                 }
 
@@ -368,7 +368,7 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Ongoing Meter Trips")) {
-
+                    mDriversPersonalOngoingTripAdapter.filterList.filter(query);
                 }
 
                 return  false;
@@ -378,7 +378,7 @@ public class ListServices extends AppCompatActivity{
             public boolean onQueryTextChange(String newText) {
 
                 if (option.equals("Pending Request")) {
-                    mPendingBookingAdapter = new PendingBookingAdapter();
+                    mPendingBookingAdapter.filterList.filter(newText);
                 }
 
                 if (option.equals("services")) {
@@ -387,7 +387,7 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Confirmed Request")) {
-                    mConfirmedBooking = new ConfirmedBooking();
+                    mConfirmedBooking.filterList.filter(newText);
                 }
 
                 if (option.equals("Cancelled Bookings")) {
@@ -396,23 +396,23 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Completed Trips")) {
-                    mCompletedTripAdapter = new CompletedTripAdapter();
+                    mCompletedTripAdapter.filterList.filter(newText);
                 }
 
                 if (option.equals("Pending Drivers")) {
-                    mDriversAdapter = new DriversAdapter();
+                    mDriversAdapter.filterList.filter(newText);
                 }
 
                 if (option.equals("Confirmed Drivers")) {
-                    mConfirmedDrivers = new Confirmed_drivers();
+                    mConfirmedDrivers.filterList.filter(newText);
                 }
 
                 if (option.equals("Deactivated Drivers")) {
-                    mDisabledDrivers = new DisabledDrivers();
+                    mDisabledDrivers.filterList.filter(newText);
                 }
 
                 if (option.equals("Vehicles")) {
-                    mVehicleAdapter = new VehicleAdapter();
+                    mVehicleAdapter.filterList.filter(newText);
 
                 }
 
@@ -422,7 +422,7 @@ public class ListServices extends AppCompatActivity{
                 }
 
                 if (option.equals("Ongoing Meter Trips")) {
-
+                    mDriversPersonalOngoingTripAdapter.filterList.filter(newText);
                 }
 
 

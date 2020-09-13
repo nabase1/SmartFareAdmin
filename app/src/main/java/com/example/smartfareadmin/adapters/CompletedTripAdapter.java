@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartfareadmin.CompletedTripDetails;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.dataObjects.Bookings;
+import com.example.smartfareadmin.dataObjects.driverBooking;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +31,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdapter.BookingViewHolder> {
+public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdapter.BookingViewHolder> implements Filterable {
 
-    ArrayList<Bookings> bookingsArrayList,bookingidArrayList;
+    ArrayList<Bookings> bookingsArrayList,mFilteredList,mBookings;
     //ArrayList<String> bookingidArrayList;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -40,7 +43,8 @@ public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdap
     public CompletedTripAdapter(){
         bookings = new Bookings();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
-        bookingidArrayList = new ArrayList<Bookings>();
+        mFilteredList = new ArrayList<Bookings>();
+        mBookings = new ArrayList<Bookings>();
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
 
@@ -53,7 +57,6 @@ public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdap
                     if((bookings.getStatus()).equals("2")){
                         bookings.setId(ds.getKey());
                         bookingsArrayList.add(bookings);
-                        bookingidArrayList.add(bookings);
 
                         Collections.sort(bookingsArrayList, new Comparator<Bookings>() {
                             @Override
@@ -63,6 +66,7 @@ public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdap
                             }
                         });
 
+                        mBookings = bookingsArrayList;
 //                        Collections.sort(bookingidArrayList, new Comparator<Bookings>() {
 //                            @Override
 //                            public int compare(Bookings o1, Bookings o2) {
@@ -127,6 +131,54 @@ public class CompletedTripAdapter extends RecyclerView.Adapter<CompletedTripAdap
     public int getItemCount() {
         return bookingsArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<Bookings> filter = new ArrayList<Bookings>();
+            if(searchString.isEmpty()){
+                mFilteredList = mBookings;
+            }else {
+                for (Bookings booking : mBookings){
+                    if(booking.getName().toLowerCase().trim().contains(searchString) ||
+                            booking.getServiceType().toLowerCase().trim().contains(searchString) ||
+                            booking.getPick_up_date().trim().toLowerCase().contains(searchString) ||
+                            booking.getPick_up_time().trim().toLowerCase().contains(searchString)){
+                        filter.add(booking);
+                    }
+//                    else if(booking.getServiceType().toLowerCase().trim().contains(searchString)){
+//                        filter.add(booking);
+//                    }
+//                    else if(booking.getPick_up_date().trim().toLowerCase().contains(searchString) ){
+//                        filter.add(booking);
+//                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            bookingsArrayList = (ArrayList<Bookings>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
     public class BookingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textName,textServiceName,textPickDate, textPickTime;

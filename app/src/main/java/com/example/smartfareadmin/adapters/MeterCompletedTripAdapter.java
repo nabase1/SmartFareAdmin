@@ -32,13 +32,11 @@ import java.util.Map;
 
 public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterCompletedTripAdapter.BookingViewHolder> implements Filterable {
 
-    ArrayList<driverBooking> driverBookingsArrayList;
-    ArrayList<driverBooking> mBookings;
+    ArrayList<driverBooking> driverBookingsArrayList,mFilteredList,mBookings;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
     driverBooking driverBooking;
-    ArrayList<driverBooking> mFilteredList;
 
     public MeterCompletedTripAdapter(){
         mBookings = new ArrayList<driverBooking>();
@@ -143,7 +141,7 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
             if(searchString.isEmpty()){
                 mFilteredList = mBookings;
             }else {
-                for (driverBooking booking : driverBookingsArrayList){
+                for (driverBooking booking : mBookings){
                     if(booking.getClientName().toLowerCase().trim().contains(searchString)){
                         filter.add(booking);
                     }

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.smartfareadmin.R;
 import com.example.smartfareadmin.RegisterDriver;
 import com.example.smartfareadmin.dataObjects.DriverDeal;
+import com.example.smartfareadmin.dataObjects.driverBooking;
 import com.example.smartfareadmin.utils.FirebaseUtils;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,20 +29,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.DriverViewHolder> {
+public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.DriverViewHolder> implements Filterable {
 
-    ArrayList<DriverDeal> driverDealArrayList;
-    ArrayList<String> userIdArray;
+    ArrayList<DriverDeal> driverDealArrayList,mFilteredList,mDriverDeals;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
     private ValueEventListener mValueEventListener;
     DriverDeal driverDeal;
-    public String userId;
 
     public Confirmed_drivers(){
 
         driverDealArrayList = FirebaseUtils.driverDealArrayList;
+        mFilteredList = new ArrayList<DriverDeal>();
+        mDriverDeals = new ArrayList<DriverDeal>();
         driverDeal = new DriverDeal();
          firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
@@ -93,6 +96,46 @@ public class Confirmed_drivers extends RecyclerView.Adapter<Confirmed_drivers.Dr
     public int getItemCount() {
         return driverDealArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<DriverDeal> filter = new ArrayList<DriverDeal>();
+            if(searchString.isEmpty()){
+                mFilteredList = mDriverDeals;
+            }else {
+                for (DriverDeal driverDeal : mDriverDeals){
+                    if(driverDeal.getDisplayName().toLowerCase().trim().contains(searchString) ||
+                            driverDeal.getName().toLowerCase().contains(searchString) ||
+                            driverDeal.getDriverLicense().toLowerCase().contains(searchString)){
+                        filter.add(driverDeal);
+                    }
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            driverDealArrayList = (ArrayList<DriverDeal>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
 
     public class DriverViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

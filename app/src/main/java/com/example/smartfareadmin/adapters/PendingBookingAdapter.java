@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,10 +27,9 @@ import java.util.Comparator;
 
 
 
-public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAdapter.BookingViewHolder> {
+public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAdapter.BookingViewHolder>  implements Filterable {
 
-    ArrayList<Bookings> bookingsArrayList;
-  //  ArrayList<String> userIdArray;
+    ArrayList<Bookings> bookingsArrayList, mFilteredList, mBookings;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ChildEventListener childEventListener;
@@ -38,7 +39,8 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
 
     public PendingBookingAdapter(){
         bookings = new Bookings();
-      //  userIdArray = new ArrayList<String>();
+        mBookings = new ArrayList<Bookings>();
+        mFilteredList = new ArrayList<Bookings>();
         bookingsArrayList = FirebaseUtils.bookingsArrayList;
         firebaseDatabase = FirebaseUtils.firebaseDatabase;
         databaseReference = FirebaseUtils.databaseReference;
@@ -64,8 +66,8 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
                             }
                         });
 
-                        //Collections.reverse(userIdArray);
-                        //Collections.reverse(bookingsArrayList);
+                        mBookings = bookingsArrayList;
+
                     }
                 }
 
@@ -123,6 +125,54 @@ public class PendingBookingAdapter extends RecyclerView.Adapter<PendingBookingAd
     public int getItemCount() {
         return bookingsArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    public Filter filterList = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String searchString = constraint.toString();
+
+            ArrayList<Bookings> filter = new ArrayList<Bookings>();
+            if(searchString.isEmpty()){
+                mFilteredList = mBookings;
+            }else {
+                for (Bookings booking : mBookings){
+                    if(booking.getName().toLowerCase().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getServiceType().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getPick_up_date().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+                    else if(booking.getPick_up_time().toLowerCase().trim().contains(searchString)){
+                        filter.add(booking);
+                    }
+
+                }
+                mFilteredList = filter;
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = mFilteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            bookingsArrayList = (ArrayList<Bookings>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    };
 
     public class BookingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textName,textServiceName,textPickDate, textPickTime;
