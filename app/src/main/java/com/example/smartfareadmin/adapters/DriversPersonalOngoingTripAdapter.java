@@ -22,8 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +59,8 @@ public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<Driv
                         Collections.sort(driverBookingsArrayList, new Comparator<driverBooking>() {
                             @Override
                             public int compare(driverBooking o1, driverBooking o2) {
-                                return Long.compare(Long.parseLong(o2.getDateTime().toString()),
-                                        Long.parseLong(o1.getDateTime().toString()));
+                                return Long.compare(Long.parseLong(o2.getTimestamp().toString()),
+                                        Long.parseLong(o1.getTimestamp().toString()));
                             }
                         });
 
@@ -187,7 +185,7 @@ public class DriversPersonalOngoingTripAdapter extends RecyclerView.Adapter<Driv
 
         public void bind(driverBooking driverBooking){
 
-            Date date=new Date(driverBooking.getDateTime());
+            Date date=new Date(driverBooking.getTimestamp());
             SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             sfd.format(date);
             String dateTime = date.toString();

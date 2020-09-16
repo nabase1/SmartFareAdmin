@@ -1,7 +1,6 @@
 package com.example.smartfareadmin.dataObjects;
 
 import java.io.Serializable;
-import java.util.Map;
 
 public class driverBooking implements Serializable {
     private String id;
@@ -12,13 +11,14 @@ public class driverBooking implements Serializable {
     private String to;
     private String price;
     private String status;
-    private Long dateTime;
+    private Long timestamp;
+    private String date_time;
 
 
     public driverBooking() {
     }
 
-    public driverBooking(String id, String driverName, String clientName, String clientNumber, String from, String to, String price, String status, Long dateTime) {
+    public driverBooking(String id, String driverName, String clientName, String clientNumber, String from, String to, String price, String status, Long timestamp, String date_time) {
         this.id = id;
         this.driverName = driverName;
         this.clientName = clientName;
@@ -27,15 +27,24 @@ public class driverBooking implements Serializable {
         this.to = to;
         this.price = price;
         this.status = status;
-        this.dateTime = dateTime;
+        this.timestamp = timestamp;
+        this.date_time = date_time;
     }
 
-    public Long getDateTime() {
-        return dateTime;
+    public String getDate_time() {
+        return date_time;
     }
 
-    public void setDateTime(Long dateTime) {
-        this.dateTime = dateTime;
+    public void setDate_time(String date_time) {
+        this.date_time = date_time;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getId() {

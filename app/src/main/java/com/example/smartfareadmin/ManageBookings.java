@@ -40,10 +40,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -387,7 +389,10 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         tripDetailsData.setUserId(userBookingId);
         tripDetailsData.setStatus("1");
         tripDetailsData.setBookingId(bookingid);
-        tripDetailsData.setDate(date);
+        tripDetailsData.setTime_stamp(new Date().getTime());
+        tripDetailsData.setService_type(mBookings.getServiceType());
+        tripDetailsData.setPick_up_date(mBookings.getPick_up_date());
+        tripDetailsData.setPick_up_time(mBookings.getPick_up_time());
 
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("trip details");

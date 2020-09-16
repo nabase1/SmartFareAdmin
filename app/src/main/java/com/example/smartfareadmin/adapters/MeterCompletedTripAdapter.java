@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Map;
 
 
 public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterCompletedTripAdapter.BookingViewHolder> implements Filterable {
@@ -64,8 +63,8 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
                         Collections.sort(driverBookingsArrayList, new Comparator<driverBooking>() {
                             @Override
                             public int compare(driverBooking o1, driverBooking o2) {
-                                return Long.compare(Long.parseLong(o2.getDateTime().toString()),
-                                        Long.parseLong(o1.getDateTime().toString()));
+                                return Long.compare(Long.parseLong(o2.getTimestamp().toString()),
+                                        Long.parseLong(o1.getTimestamp().toString()));
                             }
 
                         });
@@ -142,7 +141,8 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
                 mFilteredList = mBookings;
             }else {
                 for (driverBooking booking : mBookings){
-                    if(booking.getClientName().toLowerCase().trim().contains(searchString)){
+                    if(booking.getClientName().toLowerCase().trim().contains(searchString) ||
+                            booking.getDate_time().toLowerCase().contains(searchString)){
                         filter.add(booking);
                     }
                     else if(booking.getDriverName().toLowerCase().trim().contains(searchString)){
@@ -191,7 +191,7 @@ public class MeterCompletedTripAdapter extends RecyclerView.Adapter<MeterComplet
 
         public void bind(driverBooking driverBooking){
 
-            Date date=new Date(driverBooking.getDateTime());
+            Date date=new Date(driverBooking.getTimestamp());
             SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-YYYY  HH:mm:ss");
             sfd.format(date);
             String dateTime = date.toString();
