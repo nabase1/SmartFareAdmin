@@ -4,10 +4,16 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.format.DateFormat;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -196,6 +202,12 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
         alertDialog = builder.create();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        populateSpinner(databaseReference);
+    }
+
     private void bookingInformation() {
         bookingid = mBookings.getId();
         textName.setText(mBookings.getName());
@@ -325,14 +337,29 @@ public class ManageBookings extends AppCompatActivity implements AdapterView.OnI
                 titleList.add("Select Driver");
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
                     DriverDeal dDeals = dataSnapshot1.getValue(DriverDeal.class);
-                    if(dDeals.getStatus().equals("1")) {
-                        String driverId = dataSnapshot1.getKey();
-                        driverIdArray.add(driverId);
-                        dDeals.setId(dataSnapshot1.getKey());
-                        String driverName = dDeals.getDisplayName();
-                        array.add(dDeals);
-                        titleList.add(driverName);
+                    if(dDeals != null){
+                        if(dDeals.getStatus().equals("1")) {
+                            String driverId = dataSnapshot1.getKey();
+                            driverIdArray.add(driverId);
+                            dDeals.setId(dataSnapshot1.getKey());
+                            String driverName = dDeals.getDisplayName();
+                            array.add(dDeals);
+                            titleList.add(driverName);
+                        }
+                        if(dDeals.getStatus().equals("2")){
+                            String driverId = dataSnapshot1.getKey();
+                            driverIdArray.add(driverId);
+                            dDeals.setId(dataSnapshot1.getKey());
+                            String driverName = "*" + dDeals.getDisplayName();
+                            array.add(dDeals);
+
+//                            Spannable spannableString = new SpannableString(driverName);
+//                            spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                            titleList.add(driverName);
+                        }
                     }
+
 
                 }
 
